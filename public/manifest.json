@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "My Quick Search",
+  "name": "Geekmark",
   "version": "0.1",
-  "omnibox": { "keyword": "o" },
+  "omnibox": { "keyword": "j" },
   "background": {
     "service_worker": "background.js",
     "type": "module"
