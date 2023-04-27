@@ -8,7 +8,7 @@ export function URLInput({ label, value, onChange, className, ...props }) {
       direction={'horizontal'}
       className={`align-items-center ${className}`}
     >
-      <label className="col-3 App-text">{label}</label>
+      <kbd className="col-3 App-text alight-self-stretch">{label}</kbd>
       <Form.Control type="input" onChange={onChange} value={value || ''} />
     </Stack>
   );
