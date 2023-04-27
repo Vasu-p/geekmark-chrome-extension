@@ -11,6 +11,8 @@ import {
   Tabs,
   Tab,
   Stack,
+  FloatingLabel,
+  Form,
 } from 'react-bootstrap';
 
 // custom compos
@@ -53,7 +55,7 @@ function App() {
       <Tabs className="mt-1">
         <Tab title={'Rules'} eventKey={'custom'}>
           <div className="mt-5">
-            <Stack gap={1}>
+            <Stack gap={2} className={'mb-4'}>
               {rules.map((rule) => (
                 <Stack gap={1} direction={'horizontal'}>
                   <URLInput
@@ -80,34 +82,38 @@ function App() {
                 </Stack>
               ))}
             </Stack>
-            <div>
-              <label>Rule Command::</label>
-              <input
-                className="App-input"
-                value={newRule.command}
-                onChange={(e) =>
-                  setNewRule({ ...newRule, command: e.target.value })
-                }
-              />
-              <label>Rule URL::</label>
-              <input
-                className="App-input"
-                value={newRule.url}
-                onChange={(e) =>
-                  setNewRule({ ...newRule, url: e.target.value })
-                }
-              />
+            <Stack direction="horizontal" gap={1} className={'mb-4'}>
+              <FloatingLabel label="Rule Command" className={'flex-grow-1'}>
+                <Form.Control
+                  type="input"
+                  placeholder="Rule Command"
+                  value={newRule.command}
+                  onChange={(e) =>
+                    setNewRule({ ...newRule, command: e.target.value })
+                  }
+                />
+              </FloatingLabel>
+              <FloatingLabel label="Rule URL" className={'flex-grow-1'}>
+                <Form.Control
+                  type="input"
+                  placeholder="Rule URL"
+                  value={newRule.url}
+                  onChange={(e) =>
+                    setNewRule({ ...newRule, url: e.target.value })
+                  }
+                />
+              </FloatingLabel>
               <Button
                 onClick={() => {
                   setRules((rules) => [...rules, newRule]);
                   setNewRule({ command: '', url: '' });
                 }}
-                className={'App-button'}
+                className={'App-button align-self-stretch'}
                 variant={'light'}
               >
                 Add Rule
               </Button>
-            </div>
+            </Stack>
             <Button
               onClick={() => {
                 chrome.storage.local.set({ rules: rules });
