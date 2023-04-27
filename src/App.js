@@ -3,16 +3,19 @@ import { useState, useEffect, useCallback } from 'react';
 import './App.css';
 // components
 import {
+  Button,
   Navbar,
   Container,
   Toast,
   ToastContainer,
   Tabs,
   Tab,
+  Stack,
 } from 'react-bootstrap';
 
 // custom compos
 import { useShowToast } from './utils/hooks/useShowToast';
+import { URLInput } from './URLInput';
 
 function App() {
   // {command:'', url: ''}
@@ -29,6 +32,7 @@ function App() {
   }, []);
 
   const handleRuleUrlChange = useCallback((command, newUrl) => {
+    console.log('chaning rule', command);
     setRules((rules) =>
       rules.map((rule) =>
         rule.command === command ? { ...rule, url: newUrl } : rule
@@ -49,18 +53,18 @@ function App() {
       <Tabs className="mt-1">
         <Tab title={'Rules'} eventKey={'custom'}>
           <div className="mt-5">
-            <div>
+            <Stack gap={1}>
               {rules.map((rule) => (
-                <div>
-                  <label>{rule.command}</label>
-                  <input
-                    className="App-input"
+                <Stack gap={1} direction={'horizontal'}>
+                  <URLInput
+                    label={rule.command}
                     value={rule.url}
                     onChange={(e) =>
                       handleRuleUrlChange(rule.command, e.target.value)
                     }
+                    className={'flex-grow-1'}
                   />
-                  <button
+                  <Button
                     onClick={() => {
                       setRules((origRules) =>
                         origRules.filter(
@@ -69,12 +73,13 @@ function App() {
                       );
                     }}
                     className={'App-button'}
+                    variant={'danger'}
                   >
                     Delete Rule
-                  </button>
-                </div>
+                  </Button>
+                </Stack>
               ))}
-            </div>
+            </Stack>
             <div>
               <label>Rule Command::</label>
               <input
@@ -92,24 +97,25 @@ function App() {
                   setNewRule({ ...newRule, url: e.target.value })
                 }
               />
-              <button
+              <Button
                 onClick={() => {
                   setRules((rules) => [...rules, newRule]);
                   setNewRule({ command: '', url: '' });
                 }}
                 className={'App-button'}
+                variant={'light'}
               >
                 Add Rule
-              </button>
+              </Button>
             </div>
-            <button
+            <Button
               onClick={() => {
                 chrome.storage.local.set({ rules: rules });
               }}
               className={'App-button'}
             >
               Save Rules
-            </button>
+            </Button>
           </div>
         </Tab>
       </Tabs>
