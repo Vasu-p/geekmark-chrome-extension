@@ -126,7 +126,7 @@ function App() {
           </Stack>
         </Tab>
       </Tabs>
-      <ToastContainer position="bottom-center">
+      <ToastContainer position="bottom-center" className="mb-3">
         <Toast show={isSuccesfulSaveToastVisible}>
           <Toast.Body>Rules Saved Succesfully</Toast.Body>
         </Toast>
