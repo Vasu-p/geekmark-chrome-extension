@@ -117,6 +117,7 @@ function App() {
             <Button
               onClick={() => {
                 chrome.storage.local.set({ rules: rules });
+                showSuccesfulSaveToast();
               }}
               className={'App-button'}
             >
