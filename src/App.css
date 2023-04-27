@@ -1,0 +1,14 @@
+.App {
+  text-align: center;
+  width: 800px;
+  margin: auto;
+}
+
+.App-text {
+  text-align: right;
+}
+
+.App-icon {
+  width: 2rem;
+  margin-right: 1rem;
+}
