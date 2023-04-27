@@ -54,8 +54,8 @@ function App() {
       </Navbar>
       <Tabs className="mt-1">
         <Tab title={'Rules'} eventKey={'custom'}>
-          <div className="mt-5">
-            <Stack gap={2} className={'mb-4'}>
+          <Stack className="mt-5" gap={3}>
+            <Stack gap={2}>
               {rules.map((rule) => (
                 <Stack gap={1} direction={'horizontal'}>
                   <URLInput
@@ -82,7 +82,7 @@ function App() {
                 </Stack>
               ))}
             </Stack>
-            <Stack direction="horizontal" gap={1} className={'mb-4'}>
+            <Stack direction="horizontal" gap={1}>
               <FloatingLabel label="Rule Command" className={'flex-grow-1'}>
                 <Form.Control
                   type="input"
@@ -122,7 +122,7 @@ function App() {
             >
               Save Rules
             </Button>
-          </div>
+          </Stack>
         </Tab>
       </Tabs>
       <ToastContainer position="bottom-center">
