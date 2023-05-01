@@ -308,3 +308,7 @@ export const environments = [
     namespace: 'test-drive',
   },
 ];
+
+export const RuleType = {
+  SIMPLE: 'simple',
+};

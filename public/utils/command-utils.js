@@ -1,3 +1,5 @@
+import { RuleType } from '../constants';
+
 export const paramRegex = /{{(.*?)}}/g;
 
 export function matches(text, ruleCommand) {
@@ -12,7 +14,10 @@ export function matches(text, ruleCommand) {
  * @returns "replacement def"
  */
 export function generateUrlWithParameter(text, rule) {
-  generateUrlForSimpleRule(text, rule);
+  if (rule.type === RuleType.SIMPLE) {
+    return generateUrlForSimpleRule(text, rule);
+  }
+  return 'https://google.com'; // just dummy
 }
 
 function generateUrlForSimpleRule(text, rule) {

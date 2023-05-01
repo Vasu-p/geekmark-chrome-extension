@@ -19,10 +19,16 @@ import {
 import { useShowToast } from './utils/hooks/useShowToast';
 import { URLInput } from './URLInput';
 
+import { RuleType } from './constants';
+
 function App() {
   // {command:'', url: ''}
   const [rules, setRules] = useState([]);
-  const [newRule, setNewRule] = useState({ command: '', url: '' });
+  const [newRule, setNewRule] = useState({
+    command: '',
+    url: '',
+    type: RuleType.SIMPLE,
+  });
   const {
     show: isSuccesfulSaveToastVisible,
     showToast: showSuccesfulSaveToast,
@@ -34,7 +40,6 @@ function App() {
   }, []);
 
   const handleRuleUrlChange = useCallback((command, newUrl) => {
-    console.log('chaning rule', command);
     setRules((rules) =>
       rules.map((rule) =>
         rule.command === command ? { ...rule, url: newUrl } : rule
@@ -106,7 +111,7 @@ function App() {
               <Button
                 onClick={() => {
                   setRules((rules) => [...rules, newRule]);
-                  setNewRule({ command: '', url: '' });
+                  setNewRule({ command: '', url: '', type: RuleType.SIMPLE });
                 }}
                 className={'App-button align-self-stretch'}
                 variant={'light'}
