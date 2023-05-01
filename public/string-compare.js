@@ -1,4 +1,4 @@
-var r = class {
+const r = class {
   sortMatch(e, t) {
     return (
       r.checkThanosType(e),
@@ -29,7 +29,7 @@ var r = class {
     ];
   }
 };
-var u = class extends r {
+const u = class extends r {
   constructor() {
     super();
   }
@@ -59,7 +59,7 @@ var u = class extends r {
     return t.map((c) => (e.includes(c) ? 1 : 0));
   }
 };
-var y = class extends r {
+const y = class extends r {
   constructor() {
     super();
   }
@@ -89,7 +89,7 @@ var y = class extends r {
     return 1 - this.similarity(e, t);
   }
 };
-var h = class extends r {
+const h = class extends r {
   constructor() {
     super();
   }
@@ -111,7 +111,7 @@ var h = class extends r {
   }
 };
 
-var v = class extends r {
+const v = class extends r {
   constructor() {
     super();
   }
@@ -133,7 +133,7 @@ var v = class extends r {
   }
 };
 
-var d = class extends r {
+const d = class extends r {
   constructor() {
     super();
   }
@@ -175,7 +175,7 @@ var d = class extends r {
     return n[c][s];
   }
 };
-var f = class extends r {
+const f = class extends r {
   constructor() {
     super();
   }
@@ -209,7 +209,7 @@ var f = class extends r {
     return n[c][s];
   }
 };
-var a = class extends r {
+const a = class extends r {
   constructor() {
     super();
   }
@@ -248,7 +248,7 @@ var a = class extends r {
   }
 };
 
-var compose = class extends r {
+const compose = class extends r {
   constructor(sim1, sim2) {
     super();
     this.sim1 = sim1;
@@ -266,7 +266,7 @@ var compose = class extends r {
 // needle.length + haystack.length
 // TODO improve by checking haystack from behind 1 char at time and finding first char that matches it in needle going right to left
 
-var isPartOf = function (needle, haystack) {
+const isPartOf = function (needle, haystack) {
   let [l_n, l_h] = [needle.length, haystack.length],
     dp = [...Array(l_h + 1)].map(() => Array(l_n + 1).fill(false));
   // needle = clba haystack = claims-backend
@@ -291,7 +291,7 @@ var isPartOf = function (needle, haystack) {
   return dp[0][0];
 };
 
-var J = new u(),
+const J = new u(),
   F = new y(),
   G = new h(),
   H = new d(),

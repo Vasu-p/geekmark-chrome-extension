@@ -1,9 +1,9 @@
-export var GITHUB_ORG = {
+export const GITHUB_ORG = {
   WDF: 'WDF',
   TOOLS: 'TOOLS',
 };
 
-export var repositories = [
+export const repositories = [
   {
     name: 'agreement-masterdata',
     org: GITHUB_ORG.WDF,
@@ -274,7 +274,7 @@ export var repositories = [
   },
 ];
 
-export var environments = [
+export const environments = [
   {
     cluster: 'azure-eu1-itcm-dev',
     namespace: 'dev',
