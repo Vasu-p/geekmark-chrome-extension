@@ -1,4 +1,4 @@
-import { RuleType } from '../constants';
+import { RuleType } from '../constants.js';
 
 export const paramRegex = /{{(.*?)}}/g;
 
