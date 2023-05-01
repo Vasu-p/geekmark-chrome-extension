@@ -3,7 +3,7 @@
 import { matches, generateUrlWithParameter } from './utils/command-utils.js';
 
 chrome.omnibox.onInputEntered.addListener(async (text) => {
-  const newURL = null;
+  let newURL = null;
 
   const { rules } = await chrome.storage.local.get(['rules']);
   rules.every((rule) => {

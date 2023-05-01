@@ -2,10 +2,7 @@ export const paramRegex = /{{(.*?)}}/g;
 
 export function matches(text, ruleCommand) {
   const strippedRule = stripParameter(ruleCommand);
-  if (strippedRule && text.startsWith(strippedRule)) {
-    return true;
-  }
-  return false;
+  return strippedRule && text.startsWith(strippedRule);
 }
 
 /**
