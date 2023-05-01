@@ -12,6 +12,10 @@ export function matches(text, ruleCommand) {
  * @returns "replacement def"
  */
 export function generateUrlWithParameter(text, rule) {
+  generateUrlForSimpleRule(text, rule);
+}
+
+function generateUrlForSimpleRule(text, rule) {
   // text "abcxyz def"
   const command = rule.command; // "abcxyz {param}"
   const url = rule.url; // "replacement {param}""
