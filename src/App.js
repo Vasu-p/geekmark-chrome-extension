@@ -108,6 +108,20 @@ function App() {
                   }
                 />
               </FloatingLabel>
+              <Form.Check
+                type={'switch'}
+                id={'rule-type'}
+                label={'Advanced?'}
+                inline
+                onChange={(e) => {
+                  setNewRule({
+                    ...newRule,
+                    type: e.target.checked
+                      ? RuleType.ADVANCED
+                      : RuleType.SIMPLE,
+                  });
+                }}
+              />
               <Button
                 onClick={() => {
                   setRules((rules) => [...rules, newRule]);
