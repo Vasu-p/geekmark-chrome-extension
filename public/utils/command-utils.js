@@ -21,6 +21,9 @@ export function generateUrlWithParameter(text, rule) {
   if (rule.type === RuleType.SIMPLE) {
     return generateUrlForSimpleRule(text, rule);
   }
+  if (rule.type == RuleType.ADVANCED) {
+    return generateUrlForAdvancedRule(text, rule);
+  }
   return 'https://google.com'; // just dummy
 }
 
