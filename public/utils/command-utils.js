@@ -1,4 +1,8 @@
 import { RuleType } from '../constants.js';
+import { get_closest_match } from './string-utils.js';
+
+// todo remove eventually
+import { datasets } from '../datasets';
 
 export const paramRegex = /{{(.*?)}}/g;
 
@@ -40,6 +44,23 @@ function generateUrlForAdvancedRule(text, rule) {
   // in advance rule that parameter is associated with a dataset object
   // advance rule doesnt substitute the user typed param directly in rule url (as simple rule does)
   // in advance rule, we find the closest string in dataset which matches the user typed param and substitute that
+
+  // text "abcxyz def"
+  const command = rule.command; // "abcxyz {param}"
+  const url = rule.url; // "replacement {param}""
+  const dataset = rule.dataset; // repositories
+  const param = rule.command.match(paramRegex)[0];
+
+  // find position of param in command
+  const commandParamPosition = command.indexOf(param);
+  // find string at above position in text
+  const paramValue = text.substr(commandParamPosition, param.length);
+  // replace url param with found string
+  return url.replace(
+    paramRegex,
+    get_closest_match(paramValue, datasets[dataset], (recored) => recored.name) // hardcode to look for name (todo take input form user)
+      .name
+  );
 }
 
 /**
