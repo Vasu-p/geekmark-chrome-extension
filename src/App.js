@@ -112,6 +112,7 @@ function App() {
                 type={'switch'}
                 id={'rule-type'}
                 label={'Advanced?'}
+                checked={newRule.type === RuleType.ADVANCED}
                 inline
                 onChange={(e) => {
                   setNewRule({

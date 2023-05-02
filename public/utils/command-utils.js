@@ -2,7 +2,7 @@ import { RuleType } from '../constants.js';
 import { get_closest_match } from './string-utils.js';
 
 // todo remove eventually
-import { datasets } from '../datasets';
+import { datasets } from '../datasets.js';
 
 export const paramRegex = /{{(.*?)}}/g;
 
@@ -51,7 +51,7 @@ function generateUrlForAdvancedRule(text, rule) {
   // text "abcxyz def"
   const command = rule.command; // "abcxyz {param}"
   const url = rule.url; // "replacement {param}""
-  const dataset = rule.dataset; // repositories
+  const dataset = rule.dataset || 'repositories'; // todo remove hardcoded dataset
   const param = rule.command.match(paramRegex)[0];
 
   // find position of param in command
@@ -61,7 +61,7 @@ function generateUrlForAdvancedRule(text, rule) {
   // replace url param with found string
   return url.replace(
     paramRegex,
-    get_closest_match(paramValue, datasets[dataset], (recored) => recored.name) // hardcode to look for name (todo take input form user)
+    get_closest_match(paramValue, datasets[dataset], (record) => record.name) // hardcode to look for name (todo take input form user)
       .name
   );
 }
