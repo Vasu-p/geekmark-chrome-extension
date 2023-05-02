@@ -4,6 +4,7 @@ import './App.css';
 // components
 import {
   Button,
+  Badge,
   Navbar,
   Container,
   Toast,
@@ -63,6 +64,7 @@ function App() {
             <Stack gap={2}>
               {rules.map((rule) => (
                 <Stack gap={1} direction={'horizontal'}>
+                  <Badge>{rule.type === RuleType.SIMPLE ? 'S' : 'A'}</Badge>
                   <URLInput
                     label={rule.command}
                     value={rule.url}
