@@ -34,6 +34,14 @@ function generateUrlForSimpleRule(text, rule) {
   return url.replace(paramRegex, paramValue);
 }
 
+function generateUrlForAdvancedRule(text, rule) {
+  // rule { command: '', url: '', type: 'advanced', dataset: 'repositories'(e.g.) }
+  // in every rule there is only 1 param allowed
+  // in advance rule that parameter is associated with a dataset object
+  // advance rule doesnt substitute the user typed param directly in rule url (as simple rule does)
+  // in advance rule, we find the closest string in dataset which matches the user typed param and substitute that
+}
+
 /**
  * strips parameter i.e. {{abc}} from end of string
  *
