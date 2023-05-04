@@ -20,17 +20,10 @@ export function DatasetsTab({ onDatasetsSave }) {
   }, []);
 
   return (
-    // <Stack gap={2}>
-    //   <Form.Control
-    //     as={'textarea'}
-    //     rows={10}
-    //     value={current}
-    //     onChange={(e) => setCurrent(e.target.value)}
-    //   />
-    //   <ReactJson src={json} style={{ height: '400px', textAlign: 'left' }} />
-    //   <Button onClick={() => setJson(JSON.parse(current))}>Update</Button>
-    // </Stack>
-    <>
+    <Stack gap={1}>
+      <Button variant="success" className="ms-auto mt-5">
+        Add New
+      </Button>
       <ListGroup>
         {datasets.map((dataset) => (
           <ListGroup.Item>
@@ -63,6 +56,6 @@ export function DatasetsTab({ onDatasetsSave }) {
           </Button>
         </Modal.Footer>
       </Modal>
-    </>
+    </Stack>
   );
 }
