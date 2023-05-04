@@ -7,11 +7,11 @@ import { datasets } from '../mock/datasets';
 
 export function DatasetsTab({ onDatasetsSave }) {
   const [selectedDataset, setSelectedDataset] = useState(null);
-  const [showModal, setShowModal] = useState(false);
+  const [showViewModal, setShowViewModal] = useState(false);
 
   const handleView = useCallback((dataset) => {
     setSelectedDataset(dataset);
-    setShowModal(true);
+    setShowViewModal(true);
   }, []);
 
   return (
@@ -21,6 +21,11 @@ export function DatasetsTab({ onDatasetsSave }) {
           Add New Dataset
         </Button>
         <ListGroup>
+          {datasets.length === 0 && (
+            <ListGroup.Item>
+              No Datasets found. Please add using "Add New Dataset"
+            </ListGroup.Item>
+          )}
           {datasets.map((dataset) => (
             <ListGroup.Item>
               <Stack direction="horizontal" gap={2}>
@@ -33,7 +38,7 @@ export function DatasetsTab({ onDatasetsSave }) {
           ))}
         </ListGroup>
       </Stack>
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
+      <Modal show={showViewModal} onHide={() => setShowViewModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>{selectedDataset?.name || ''}</Modal.Title>
         </Modal.Header>
@@ -51,7 +56,7 @@ export function DatasetsTab({ onDatasetsSave }) {
           />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
+          <Button variant="secondary" onClick={() => setShowViewModal(false)}>
             Close
           </Button>
         </Modal.Footer>
