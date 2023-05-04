@@ -3,11 +3,14 @@ import { Button, Stack, ListGroup, Modal } from 'react-bootstrap';
 
 import ReactJson from 'react-json-view';
 
-import { datasets } from '../mock/datasets';
+import { AddModal } from './AddModal';
+
+import { datasets } from '../../mock/datasets';
 
 export function DatasetsTab({ onDatasetsSave }) {
   const [selectedDataset, setSelectedDataset] = useState(null);
   const [showViewModal, setShowViewModal] = useState(false);
+  const [showAddModal, setShowAddModal] = useState(false);
 
   const handleView = useCallback((dataset) => {
     setSelectedDataset(dataset);
@@ -17,7 +20,11 @@ export function DatasetsTab({ onDatasetsSave }) {
   return (
     <>
       <Stack gap={1} className={'mt-1'}>
-        <Button variant="success" className="ms-auto">
+        <Button
+          variant="success"
+          className="ms-auto"
+          onClick={() => setShowAddModal(true)}
+        >
           Add New Dataset
         </Button>
         <ListGroup>
@@ -61,6 +68,11 @@ export function DatasetsTab({ onDatasetsSave }) {
           </Button>
         </Modal.Footer>
       </Modal>
+      <AddModal
+        show={showAddModal}
+        onSuccess={() => setShowAddModal(false)}
+        onClose={() => setShowAddModal(false)}
+      />
     </>
   );
 }
