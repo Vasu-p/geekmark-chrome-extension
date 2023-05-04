@@ -46,11 +46,11 @@ export function DatasetsTab({ onDatasetsSave }) {
       </ListGroup>
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>{selectedDataset.name}</Modal.Title>
+          <Modal.Title>{selectedDataset?.name || ''}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <ReactJson
-            src={selectedDataset.values}
+            src={selectedDataset?.values || {}}
             style={{ height: '400px', textAlign: 'left' }}
             name={null}
             enableClipboard={false}
