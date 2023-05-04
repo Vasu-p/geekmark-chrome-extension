@@ -25,7 +25,7 @@ export function DatasetsTab({ onDatasetsSave }) {
             <ListGroup.Item>
               <Stack direction="horizontal" gap={2}>
                 {dataset.name}
-                <Button className="ms-auto" onClick={() => handleEdit(dataset)}>
+                <Button className="ms-auto" onClick={() => handleView(dataset)}>
                   View
                 </Button>
               </Stack>
