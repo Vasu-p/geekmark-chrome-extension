@@ -14,11 +14,6 @@ export function DatasetsTab({ onDatasetsSave }) {
     setShowModal(true);
   }, []);
 
-  const handleEdit = useCallback((dataset) => {
-    setSelectedDataset(dataset);
-    setShowModal(true);
-  }, []);
-
   return (
     <>
       <Stack gap={1} className={'mt-1'}>
@@ -30,10 +25,9 @@ export function DatasetsTab({ onDatasetsSave }) {
             <ListGroup.Item>
               <Stack direction="horizontal" gap={2}>
                 {dataset.name}
-                <Button className="ms-auto" onClick={() => handleView(dataset)}>
-                  Edit
+                <Button className="ms-auto" onClick={() => handleEdit(dataset)}>
+                  View
                 </Button>
-                <Button onClick={() => handleEdit(dataset)}>View</Button>
               </Stack>
             </ListGroup.Item>
           ))}
