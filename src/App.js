@@ -9,14 +9,12 @@ import {
   ToastContainer,
   Tabs,
   Tab,
-  Form,
 } from 'react-bootstrap';
-
-import ReactJson from 'react-json-view';
 
 // custom compos
 import { useShowToast } from './utils/hooks/useShowToast';
 import { RulesTab } from './components/RulesTab';
+import { DatasetsTab } from './components/DatasetsTab';
 
 function App() {
   const {
@@ -37,6 +35,9 @@ function App() {
       <Tabs className="mt-1">
         <Tab title={'Rules'} eventKey={'custom'}>
           <RulesTab onRulesSave={showSuccesfulSaveToast} />
+        </Tab>
+        <Tab title={'Datasets'} eventKey={'datasets'}>
+          <DatasetsTab onDatasetsSave={showSuccesfulSaveToast} />
         </Tab>
       </Tabs>
       <ToastContainer position="bottom-center" className="mb-3">
