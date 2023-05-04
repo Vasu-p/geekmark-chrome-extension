@@ -20,23 +20,25 @@ export function DatasetsTab({ onDatasetsSave }) {
   }, []);
 
   return (
-    <Stack gap={1}>
-      <Button variant="success" className="ms-auto mt-5">
-        Add New
-      </Button>
-      <ListGroup>
-        {datasets.map((dataset) => (
-          <ListGroup.Item>
-            <Stack direction="horizontal" gap={2}>
-              {dataset.name}
-              <Button className="ms-auto" onClick={() => handleView(dataset)}>
-                Edit
-              </Button>
-              <Button onClick={() => handleEdit(dataset)}>View</Button>
-            </Stack>
-          </ListGroup.Item>
-        ))}
-      </ListGroup>
+    <>
+      <Stack gap={1} className={'mt-1'}>
+        <Button variant="success" className="ms-auto">
+          Add New Dataset
+        </Button>
+        <ListGroup>
+          {datasets.map((dataset) => (
+            <ListGroup.Item>
+              <Stack direction="horizontal" gap={2}>
+                {dataset.name}
+                <Button className="ms-auto" onClick={() => handleView(dataset)}>
+                  Edit
+                </Button>
+                <Button onClick={() => handleEdit(dataset)}>View</Button>
+              </Stack>
+            </ListGroup.Item>
+          ))}
+        </ListGroup>
+      </Stack>
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>{selectedDataset?.name || ''}</Modal.Title>
@@ -44,7 +46,11 @@ export function DatasetsTab({ onDatasetsSave }) {
         <Modal.Body>
           <ReactJson
             src={selectedDataset?.values || {}}
-            style={{ height: '400px', textAlign: 'left' }}
+            style={{
+              height: '400px',
+              textAlign: 'left',
+              overflow: 'auto',
+            }}
             name={null}
             enableClipboard={false}
             displayDataTypes={false}
@@ -56,6 +62,6 @@ export function DatasetsTab({ onDatasetsSave }) {
           </Button>
         </Modal.Footer>
       </Modal>
-    </Stack>
+    </>
   );
 }
