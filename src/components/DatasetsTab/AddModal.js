@@ -26,7 +26,7 @@ export function AddModal({ show, onSuccess, onClose }) {
             <Form.Label>JSON</Form.Label>
             <Form.Control
               as={'textarea'}
-              placeholder='[{"name": ".."}, {"name": ".."},...]'
+              placeholder='["abc", "def", ...]'
               style={{ height: '400px' }}
             />
           </Form.Group>
