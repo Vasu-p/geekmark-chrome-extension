@@ -6,7 +6,7 @@ export function AddModal({ show, onSuccess, onClose }) {
   const [newDataset, setNewDataset] = useState({
     name: '',
     shortName: '',
-    value: null,
+    values: [],
   });
 
   const handleDatasetChange = useCallback(
@@ -18,7 +18,20 @@ export function AddModal({ show, onSuccess, onClose }) {
 
   const handleSave = useCallback(() => {
     onSuccess(newDataset);
+    setNewDataset({
+      name: '',
+      shortName: '',
+      values: [],
+    });
   }, [onSuccess, newDataset]);
+
+  const handleClose = useCallback(() => {
+    setNewDataset({
+      name: '',
+      shortName: '',
+      values: [],
+    });
+  }, []);
 
   return (
     <Modal show={show} onHide={onClose}>
@@ -56,7 +69,7 @@ export function AddModal({ show, onSuccess, onClose }) {
               onChange={(e) => {
                 try {
                   let parsedValue = JSON.parse(e.target.value);
-                  handleDatasetChange('value', parsedValue);
+                  handleDatasetChange('values', parsedValue);
                 } catch {}
               }}
             />
@@ -64,7 +77,7 @@ export function AddModal({ show, onSuccess, onClose }) {
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={onClose}>
+        <Button variant="secondary" onClick={handleClose}>
           Close
         </Button>
         <Button variant="primary" onClick={handleSave}>

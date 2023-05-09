@@ -7,6 +7,7 @@ import ReactJson from 'react-json-view';
 import { AddModal } from './AddModal';
 
 import { useLocalStorage } from '../../utils/hooks/useLocalStorage';
+import { transformDataset } from '../../utils/formatUtils';
 
 export function DatasetsTab({ onDatasetsSave }) {
   const [selectedDataset, setSelectedDataset] = useState(null);
@@ -75,8 +76,8 @@ export function DatasetsTab({ onDatasetsSave }) {
       </Modal>
       <AddModal
         show={showAddModal}
-        onSuccess={(dataset) => {
-          console.log('new dataset', dataset);
+        onSuccess={(newDataset) => {
+          setDatasets([...datasets, transformDataset(newDataset)]);
           setShowAddModal(false);
         }}
         onClose={() => setShowAddModal(false)}
