@@ -1,6 +1,7 @@
 export const datasets = [
   {
     name: 'repositories',
+    shortName: 'repo',
     values: [
       { name: 'c-ui' },
       { name: 'c-ba' },
@@ -18,6 +19,7 @@ export const datasets = [
   },
   {
     name: 'environments',
+    shortName: 'env',
     values: [
       { name: 'dev' },
       { name: 'staging' },

@@ -1,11 +1,24 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import { Button, Form, Modal } from 'react-bootstrap';
 
 export function AddModal({ show, onSuccess, onClose }) {
+  const [newDataset, setNewDataset] = useState({
+    name: '',
+    shortName: '',
+    value: null,
+  });
+
+  const handleDatasetChange = useCallback(
+    (key, value) => {
+      setNewDataset({ ...newDataset, [key]: value });
+    },
+    [newDataset, setNewDataset]
+  );
+
   const handleSave = useCallback(() => {
-    onSuccess();
-  }, [onSuccess]);
+    onSuccess(newDataset);
+  }, [onSuccess, newDataset]);
 
   return (
     <Modal show={show} onHide={onClose}>
@@ -15,8 +28,20 @@ export function AddModal({ show, onSuccess, onClose }) {
       <Modal.Body>
         <Form>
           <Form.Group className="mb-3">
-            <Form.Label>Dataset Name</Form.Label>
-            <Form.Control type={'input'} placeholder="Enter title" />
+            <Form.Label>Name</Form.Label>
+            <Form.Control
+              type={'input'}
+              placeholder="Dataset Name"
+              onChange={(e) => handleDatasetChange('name', e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Short Name</Form.Label>
+            <Form.Control
+              type={'input'}
+              placeholder="Dataset Short Name"
+              onChange={(e) => handleDatasetChange('shortName', e.target.value)}
+            />
             <Form.Text className="text-muted">
               Use this to refer to this dataset in your rules
             </Form.Text>
@@ -27,7 +52,13 @@ export function AddModal({ show, onSuccess, onClose }) {
             <Form.Control
               as={'textarea'}
               placeholder='["abc", "def", ...]'
-              style={{ height: '400px' }}
+              style={{ height: '300px' }}
+              onChange={(e) => {
+                try {
+                  let parsedValue = JSON.parse(e.target.value);
+                  handleDatasetChange('value', parsedValue);
+                } catch {}
+              }}
             />
           </Form.Group>
         </Form>

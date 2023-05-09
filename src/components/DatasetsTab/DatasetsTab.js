@@ -75,7 +75,10 @@ export function DatasetsTab({ onDatasetsSave }) {
       </Modal>
       <AddModal
         show={showAddModal}
-        onSuccess={() => setShowAddModal(false)}
+        onSuccess={(dataset) => {
+          console.log('new dataset', dataset);
+          setShowAddModal(false);
+        }}
         onClose={() => setShowAddModal(false)}
       />
     </>
