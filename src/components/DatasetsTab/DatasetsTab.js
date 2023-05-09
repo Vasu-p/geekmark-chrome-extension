@@ -12,7 +12,7 @@ export function DatasetsTab({ onDatasetsSave }) {
   const [selectedDataset, setSelectedDataset] = useState(null);
   const [showViewModal, setShowViewModal] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
-  const { data: fetchedDatasets, setData: setDatasets } = useLocalStorage(
+  const { data: datasets, setData: setDatasets } = useLocalStorage(
     'datasets',
     []
   );
@@ -33,12 +33,12 @@ export function DatasetsTab({ onDatasetsSave }) {
           Add New Dataset
         </Button>
         <ListGroup>
-          {fetchedDatasets.length === 0 && (
+          {datasets.length === 0 && (
             <ListGroup.Item>
               No Datasets found. Please add using "Add New Dataset"
             </ListGroup.Item>
           )}
-          {fetchedDatasets.map((dataset) => (
+          {datasets.map((dataset) => (
             <ListGroup.Item>
               <Stack direction="horizontal" gap={2}>
                 {dataset.name}

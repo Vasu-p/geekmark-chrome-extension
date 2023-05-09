@@ -1,8 +1,8 @@
 /*global chrome*/
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 export function useLocalStorage(datakey, defaultValue) {
-  const [dataState, setDataState] = useState();
+  const [dataState, setDataState] = useState(defaultValue);
   useEffect(() => {
     async function setDataFromStorage() {
       const fetched =
@@ -10,12 +10,15 @@ export function useLocalStorage(datakey, defaultValue) {
       setDataState(fetched);
     }
     setDataFromStorage();
-  }, []);
+  }, [datakey, defaultValue]);
 
-  function setData(data) {
-    setDataState(data);
-    chrome.storage.local.set({ [datakey]: data });
-  }
+  const setData = useCallback(
+    (data) => {
+      setDataState(data);
+      chrome.storage.local.set({ [datakey]: data });
+    },
+    [datakey]
+  );
 
   return { data: dataState, setData };
 }
