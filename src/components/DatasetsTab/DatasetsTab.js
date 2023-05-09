@@ -1,3 +1,4 @@
+/*global chrome*/
 import React, { useCallback, useState } from 'react';
 import { Button, Stack, ListGroup, Modal } from 'react-bootstrap';
 
@@ -5,12 +6,16 @@ import ReactJson from 'react-json-view';
 
 import { AddModal } from './AddModal';
 
-import { datasets } from '../../mock/datasets';
+import { useLocalStorage } from '../../utils/hooks/useLocalStorage';
 
 export function DatasetsTab({ onDatasetsSave }) {
   const [selectedDataset, setSelectedDataset] = useState(null);
   const [showViewModal, setShowViewModal] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
+  const { data: fetchedDatasets, setData: setDatasets } = useLocalStorage(
+    'datasets',
+    []
+  );
 
   const handleView = useCallback((dataset) => {
     setSelectedDataset(dataset);
@@ -28,12 +33,12 @@ export function DatasetsTab({ onDatasetsSave }) {
           Add New Dataset
         </Button>
         <ListGroup>
-          {datasets.length === 0 && (
+          {fetchedDatasets.length === 0 && (
             <ListGroup.Item>
               No Datasets found. Please add using "Add New Dataset"
             </ListGroup.Item>
           )}
-          {datasets.map((dataset) => (
+          {fetchedDatasets.map((dataset) => (
             <ListGroup.Item>
               <Stack direction="horizontal" gap={2}>
                 {dataset.name}
