@@ -13,10 +13,12 @@ export function DatasetsTab({ onDatasetsSave }) {
   const [selectedDataset, setSelectedDataset] = useState(null);
   const [showViewModal, setShowViewModal] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
-  const { data: datasets, setData: setDatasets } = useLocalStorage(
-    'datasets',
-    []
-  );
+  const {
+    data: datasets,
+    setData: setDatasets,
+    deleteData: deleteDataset,
+    addData: addDataset,
+  } = useLocalStorage('datasets', 'array', (dataset) => dataset.name);
 
   const handleView = useCallback((dataset) => {
     setSelectedDataset(dataset);
@@ -45,6 +47,14 @@ export function DatasetsTab({ onDatasetsSave }) {
                 {dataset.name}
                 <Button className="ms-auto" onClick={() => handleView(dataset)}>
                   View
+                </Button>
+                <Button
+                  variant="danger"
+                  onClick={() => {
+                    deleteDataset(dataset.name);
+                  }}
+                >
+                  Delete
                 </Button>
               </Stack>
             </ListGroup.Item>
@@ -77,7 +87,7 @@ export function DatasetsTab({ onDatasetsSave }) {
       <AddModal
         show={showAddModal}
         onSuccess={(newDataset) => {
-          setDatasets([...datasets, transformDataset(newDataset)]);
+          addDataset(transformDataset(newDataset));
           setShowAddModal(false);
         }}
         onClose={() => setShowAddModal(false)}
