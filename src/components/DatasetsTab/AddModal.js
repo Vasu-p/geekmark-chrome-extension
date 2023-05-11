@@ -31,10 +31,11 @@ export function AddModal({ show, onSuccess, onClose }) {
       shortName: '',
       values: [],
     });
-  }, []);
+    onClose();
+  }, [onClose]);
 
   return (
-    <Modal show={show} onHide={onClose}>
+    <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
         <Modal.Title>Add New Dataset</Modal.Title>
       </Modal.Header>
