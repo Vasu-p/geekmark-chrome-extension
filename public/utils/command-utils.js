@@ -1,8 +1,4 @@
-import { RuleType } from '../constants.js';
 import { get_closest_match } from './string-utils.js';
-
-// todo remove eventually
-import { datasets } from '../datasets.js';
 
 export const paramRegex = /{{(.*?)}}/g;
 
@@ -11,23 +7,7 @@ export function matches(text, ruleCommand) {
   return strippedRule && text.startsWith(strippedRule);
 }
 
-/**
- *
- * @param {*} text "abcxyz def"
- * @param {*} rule "replacement {param}"
- * @returns "replacement def"
- */
-export function generateUrlWithParameter(text, rule) {
-  if (rule.type === RuleType.SIMPLE) {
-    return generateUrlForSimpleRule(text, rule);
-  }
-  if (rule.type == RuleType.ADVANCED) {
-    return generateUrlForAdvancedRule(text, rule);
-  }
-  return 'https://google.com'; // just dummy
-}
-
-function generateUrlForSimpleRule(text, rule) {
+export function generateUrlForSimpleRule(text, rule) {
   // text "abcxyz def"
   const command = rule.command; // "abcxyz {param}"
   const url = rule.url; // "replacement {param}""
@@ -41,7 +21,7 @@ function generateUrlForSimpleRule(text, rule) {
   return url.replace(paramRegex, paramValue);
 }
 
-function generateUrlForAdvancedRule(text, rule) {
+export function generateUrlForAdvancedRule(text, rule, dataset) {
   // rule { command: '', url: '', type: 'advanced', dataset: 'repositories'(e.g.) }
   // in every rule there is only 1 param allowed
   // in advance rule that parameter is associated with a dataset object
@@ -51,7 +31,6 @@ function generateUrlForAdvancedRule(text, rule) {
   // text "abcxyz def"
   const command = rule.command; // "abcxyz {param}"
   const url = rule.url; // "replacement {param}""
-  const dataset = rule.dataset || 'repositories'; // todo remove hardcoded dataset
   const param = rule.command.match(paramRegex)[0];
 
   // find position of param in command
@@ -61,9 +40,26 @@ function generateUrlForAdvancedRule(text, rule) {
   // replace url param with found string
   return url.replace(
     paramRegex,
-    get_closest_match(paramValue, datasets[dataset], (record) => record.name) // hardcode to look for name (todo take input form user)
-      .name
+    get_closest_match(paramValue, dataset.values, (record) => record.name).name // hardcode to look for name (todo take input form user)
   );
+}
+
+export function getMatchingDataset(datasets, rule) {
+  const param = rule.command.match(paramRegex)[0];
+  const paramWithoutBraces = param.replaceAll('{', '').replaceAll('}', '');
+
+  console.log(
+    'param',
+    param,
+    'param without braces',
+    paramWithoutBraces,
+    'rule',
+    rule
+  );
+
+  return datasets.filter(
+    (dataset) => dataset.shortName === paramWithoutBraces
+  )[0];
 }
 
 /**
