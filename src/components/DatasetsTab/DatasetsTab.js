@@ -45,9 +45,9 @@ export function DatasetsTab({ onDatasetsSave }) {
             <ListGroup.Item>
               <Stack direction="horizontal" gap={2}>
                 <h5 className="mb-0">{dataset.name}</h5>
-                <span>
-                  Use as <kbd>{`{{${dataset.shortName}}}`}</kbd> in the rules
-                </span>
+                <em>
+                  Use as <mark>{`{{${dataset.shortName}}}`}</mark> in the rules
+                </em>
                 <Button className="ms-auto" onClick={() => handleView(dataset)}>
                   View
                 </Button>
