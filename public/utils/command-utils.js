@@ -3,8 +3,11 @@ import { get_closest_match } from './string-utils.js';
 export const paramRegex = /{{(.*?)}}/g;
 
 export function matches(text, ruleCommand) {
-  const strippedRule = stripParameter(ruleCommand);
-  return strippedRule && text.startsWith(strippedRule);
+  const ruleRegex = generateRuleRegex(ruleCommand);
+  if (!ruleRegex) {
+    return false;
+  }
+  return ruleRegex.test(text);
 }
 
 export function generateUrlForSimpleRule(text, rule) {
@@ -71,4 +74,12 @@ export function getMatchingDataset(datasets, rule) {
 function stripParameter(str) {
   const found = str.match(paramRegex);
   return found ? str.replace(found[0], '').trim() : undefined;
+}
+
+function generateRuleRegex(str) {
+  const found = str.match(paramRegex);
+
+  return found
+    ? new RegExp(str.replace(found[0], '[a-zA-Z-]+'), 'g')
+    : undefined;
 }

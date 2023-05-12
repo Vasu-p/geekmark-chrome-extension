@@ -21,12 +21,14 @@ describe('generateUrlWithParameter', () => {
   });
 });
 
-describe('matches', () => {
+describe.only('matches', () => {
   it.each([
     ['abc def', 'abc {{param}}', true],
     ['abcdef', 'abc{{param}}', true],
     ['defabc', 'abc{{param}}', false],
     ['abcdef', 'dac{{param}}', false],
+    ['ab text', 'ab {{par}}', true],
+    ['abcd text', 'ab {{par}}', false],
   ])('Works for %s', (text, ruleCommand, expected) => {
     expect(matches(text, ruleCommand)).toBe(expected);
   });
