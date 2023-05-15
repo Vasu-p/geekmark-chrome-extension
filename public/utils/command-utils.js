@@ -7,6 +7,7 @@ export function matches(text, ruleCommand) {
   if (!ruleRegex) {
     return false;
   }
+  console.log(ruleRegex, text, ruleRegex.test(text));
   return ruleRegex.test(text);
 }
 
@@ -19,9 +20,10 @@ export function generateUrlForSimpleRule(text, rule) {
   // find position of param in command
   const commandParamPosition = command.indexOf(param);
   // find string at above position in text
-  const paramValue = text.substr(commandParamPosition, param.length);
+  const paramValue = text.substr(commandParamPosition);
+  console.log(command, url, param, paramValue);
   // replace url param with found string
-  return url.replace(paramRegex, paramValue);
+  return url.replace(param, paramValue);
 }
 
 export function generateUrlForAdvancedRule(text, rule, dataset) {
@@ -80,6 +82,6 @@ function generateRuleRegex(str) {
   const found = str.match(paramRegex);
 
   return found
-    ? new RegExp(str.replace(found[0], '[a-zA-Z-]+'), 'g')
+    ? new RegExp(str.replace(found[0], '[a-zA-Z-0-9]+'), 'g')
     : undefined;
 }

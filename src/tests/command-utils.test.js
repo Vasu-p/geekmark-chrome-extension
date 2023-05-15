@@ -1,5 +1,5 @@
 import {
-  generateUrlWithParameter,
+  generateUrlForSimpleRule,
   matches,
 } from '../../public/utils/command-utils';
 
@@ -17,11 +17,11 @@ describe('generateUrlWithParameter', () => {
     ],
     // ['abcdefxyz', { command: 'abc{{param}}xyz', url: 'https://{{param}}' }, 'https://def'], // doesnt work as of now
   ])('Works', (text, rule, expected) => {
-    expect(generateUrlWithParameter(text, rule)).toEqual(expected);
+    expect(generateUrlForSimpleRule(text, rule)).toEqual(expected);
   });
 });
 
-describe.only('matches', () => {
+describe('matches', () => {
   it.each([
     ['abc def', 'abc {{param}}', true],
     ['abcdef', 'abc{{param}}', true],
