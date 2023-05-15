@@ -7,7 +7,6 @@ export function matches(text, ruleCommand) {
   if (!ruleRegex) {
     return false;
   }
-  console.log(ruleRegex, text, ruleRegex.test(text));
   return ruleRegex.test(text);
 }
 

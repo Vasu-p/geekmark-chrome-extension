@@ -25,7 +25,6 @@ chrome.omnibox.onInputEntered.addListener(async (text) => {
       }
       if (rule.type === RuleType.ADVANCED) {
         const dataset = getMatchingDataset(datasets, rule);
-        console.log('matchign dataset', dataset);
         newURL = generateUrlForAdvancedRule(text, rule, dataset);
       }
       return false;
