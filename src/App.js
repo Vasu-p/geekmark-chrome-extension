@@ -31,7 +31,7 @@ function App() {
             <img src="/icon.png" className="App-icon" />
             Geekmark
           </Navbar.Brand>
-          <QuestionCircle className="ms-auto App-icon" size={32} />
+          <QuestionCircle className="ms-auto App-icon" size={28} />
         </Container>
       </Navbar>
       <Tabs className="mt-1">
