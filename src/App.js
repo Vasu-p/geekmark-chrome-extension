@@ -10,6 +10,7 @@ import {
   Tabs,
   Tab,
 } from 'react-bootstrap';
+import { QuestionCircle } from 'react-bootstrap-icons';
 
 // custom compos
 import { useShowToast } from './utils/hooks/useShowToast';
@@ -30,6 +31,7 @@ function App() {
             <img src="/icon.png" className="App-icon" />
             Geekmark
           </Navbar.Brand>
+          <QuestionCircle className="ms-auto App-icon" size={32} />
         </Container>
       </Navbar>
       <Tabs className="mt-1">
