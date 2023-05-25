@@ -1,5 +1,5 @@
 /*global chrome*/
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 // components
 import {
@@ -16,12 +16,14 @@ import { QuestionCircle } from 'react-bootstrap-icons';
 import { useShowToast } from './utils/hooks/useShowToast';
 import { RulesTab } from './components/RulesTab';
 import { DatasetsTab } from './components/DatasetsTab';
+import { HelpModal } from './components/HelpModal';
 
 function App() {
   const {
     show: isSuccesfulSaveToastVisible,
     showToast: showSuccesfulSaveToast,
   } = useShowToast(false, 3000);
+  const [showHelpModal, setShowHelpModal] = useState(false);
 
   return (
     <div className="App">
@@ -31,7 +33,12 @@ function App() {
             <img src="/icon.png" className="App-icon" />
             Geekmark
           </Navbar.Brand>
-          <QuestionCircle className="ms-auto App-icon" size={28} />
+          <QuestionCircle
+            className="ms-auto App-icon"
+            size={28}
+            onClick={() => setShowHelpModal(true)}
+            style={{ cursor: 'pointer' }}
+          />
         </Container>
       </Navbar>
       <Tabs className="mt-1">
@@ -42,6 +49,7 @@ function App() {
           <DatasetsTab onDatasetsSave={showSuccesfulSaveToast} />
         </Tab>
       </Tabs>
+      <HelpModal show={showHelpModal} onClose={() => setShowHelpModal(false)} />
       <ToastContainer position="bottom-center" className="mb-3">
         <Toast show={isSuccesfulSaveToastVisible}>
           <Toast.Body>Rules Saved Succesfully</Toast.Body>
