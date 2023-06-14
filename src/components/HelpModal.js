@@ -38,12 +38,12 @@ export function HelpModal({ show, onClose }) {
                   <Accordion.Collapse eventKey="0">
                     <Card.Body>
                       To add a simple rule, simply type in the format "shortcut
-                      -> URL" into the input field on the extension popup. For
-                      example, to create a shortcut for Google, you would type
-                      "g -> https://google.com". Once you've added a rule, you
-                      can use the shortcut to quickly navigate to the URL by
-                      typing the shortcut into the address bar and pressing
-                      enter.
+                      -&#62; URL" into the input field on the extension popup.
+                      For example, to create a shortcut for Google, you would
+                      type "g -&#62; https://google.com". Once you've added a
+                      rule, you can use the shortcut to quickly navigate to the
+                      URL by typing the shortcut into the address bar and
+                      pressing enter.
                     </Card.Body>
                   </Accordion.Collapse>
                 </Card>
@@ -59,9 +59,9 @@ export function HelpModal({ show, onClose }) {
                       indicate where the parameter should be inserted in the
                       URL. For example, to create a shortcut for Gmail that goes
                       to the inbox or sent folder depending on the parameter,
-                      you would type "mail {{param}} ->
-                      https://mail.google.com/mail/u/0/#{{param}}". Once
-                      you've added a rule, you can use the shortcut with a
+                      you would type "mail &#123;&#123;param&#125;&#125; -&#62;
+                      https://mail.google.com/mail/u/0/#&#123;&#123;param&#125;&#125;".
+                      Once you've added a rule, you can use the shortcut with a
                       parameter to quickly navigate to the appropriate URL by
                       typing the shortcut followed by the parameter into the
                       address bar and pressing enter.
