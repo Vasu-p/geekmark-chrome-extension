@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  Modal,
-  Container,
-  Row,
-  Col,
-  Accordion,
-  Card,
-  Button,
-} from 'react-bootstrap';
+import { Modal, Card, ListGroup, ListGroupItem } from 'react-bootstrap';
 
 export function HelpModal({ show, onClose }) {
   return (
@@ -16,63 +8,47 @@ export function HelpModal({ show, onClose }) {
         <Modal.Title>How to use</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Container>
-          <Row>
-            <Col>
-              <h1>Geekmark Help</h1>
-              <p>
-                Welcome to the Geekmark help page. Here you can find information
-                on how to use the extension.
-              </p>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Accordion>
-                <Card>
-                  <Card.Header>
-                    <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                      Adding Simple Rules
-                    </Accordion.Toggle>
-                  </Card.Header>
-                  <Accordion.Collapse eventKey="0">
-                    <Card.Body>
-                      To add a simple rule, simply type in the format "shortcut
-                      -&#62; URL" into the input field on the extension popup.
-                      For example, to create a shortcut for Google, you would
-                      type "g -&#62; https://google.com". Once you've added a
-                      rule, you can use the shortcut to quickly navigate to the
-                      URL by typing the shortcut into the address bar and
-                      pressing enter.
-                    </Card.Body>
-                  </Accordion.Collapse>
-                </Card>
-                <Card>
-                  <Card.Header>
-                    <Accordion.Toggle as={Button} variant="link" eventKey="1">
-                      Adding Rules with Parameters
-                    </Accordion.Toggle>
-                  </Card.Header>
-                  <Accordion.Collapse eventKey="1">
-                    <Card.Body>
-                      To add a rule with parameters, use double curly braces to
-                      indicate where the parameter should be inserted in the
-                      URL. For example, to create a shortcut for Gmail that goes
-                      to the inbox or sent folder depending on the parameter,
-                      you would type "mail &#123;&#123;param&#125;&#125; -&#62;
-                      https://mail.google.com/mail/u/0/#&#123;&#123;param&#125;&#125;".
-                      Once you've added a rule, you can use the shortcut with a
-                      parameter to quickly navigate to the appropriate URL by
-                      typing the shortcut followed by the parameter into the
-                      address bar and pressing enter.
-                    </Card.Body>
-                  </Accordion.Collapse>
-                </Card>
-              </Accordion>
-            </Col>
-          </Row>
-        </Container>
+        <Card>
+          <Card.Body>
+            <Card.Title>Simple Rules</Card.Title>
+            <Card.Text>
+              To create a simple rule, use the following format:
+              <br />
+              <code>command:: shortcut URL:: url</code>
+              <br />
+              For example:
+              <br />
+              <code>command:: g URL:: https://www.google.com</code>
+              <br />
+              This will create a shortcut for going to Google.
+            </Card.Text>
+            <Card.Title>Rules with Parameters</Card.Title>
+            <Card.Text>
+              To create a rule with a parameter, use the following format:
+              <br />
+              <code>
+                command:: shortcut &#123;&#123;param&#125;&#125; URL::
+                url&#123;&#123;param&#125;&#125;
+              </code>
+              <br />
+              For example:
+              <br />
+              <code>
+                command:: mail &#123;&#123;folder&#125;&#125; URL::
+                https://mail.google.com/mail/u/0/#&#123;&#123;folder&#125;&#125;
+              </code>
+              <br />
+              This will create a shortcut for going to a specific folder in
+              Gmail. To use it, type "mail foldername" (e.g. "mail inbox").
+            </Card.Text>
+            <Card.Text>
+              Note: Only one parameter is supported at this time, and it must be
+              at the end of the command.
+            </Card.Text>
+          </Card.Body>
+        </Card>
       </Modal.Body>
     </Modal>
   );
 }
+// {'{{param}}'}
