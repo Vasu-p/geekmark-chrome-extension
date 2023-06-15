@@ -23,14 +23,14 @@ export function HelpModal({ show, onClose }) {
         <h4>Rule Format:</h4>
         {/* prettier-ignore */}
         <code>
-          command:: [command]
-          URL:: [URL]
+          command:: [command]{"\n"}
+          URL:: [URL]{"\n"}
         </code>
         <h4>Example:</h4>
         {/* prettier-ignore */}
         <code>
-          command:: g
-          URL:: https://www.google.com
+          command:: g{"\n"}
+          URL:: https://www.google.com{"\n"}
         </code>
         In this example, when the user types "g" in the address bar and presses
         Enter, the extension will open "https://www.google.com".
@@ -42,14 +42,14 @@ export function HelpModal({ show, onClose }) {
         <h4>Rule Format:</h4>
         {/* prettier-ignore */}
         <code>
-          command:: [command] {'{{param}}'}
-          URL:: [URL with {'{{param}}'} placeholder]
+          command:: [command] {'{{param}}'}{"\n"}
+          URL:: [URL with {'{{param}}'} placeholder]{"\n"}
         </code>
         <h4>Example:</h4>
         {/* prettier-ignore */}
         <code>
-          command:: mail {'{{param}}'}
-          URL:: https://mail.google.com/mail/u/0/#{'{{param}}'}
+          command:: mail {'{{param}}'}{"\n"}
+          URL:: https://mail.google.com/mail/u/0/#{'{{param}}'}{"\n"}
         </code>
         In this example, the user can type "mail inbox" in the address bar, and
         the extension will open "https://mail.google.com/mail/u/0/#inbox".
