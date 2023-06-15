@@ -12,3 +12,8 @@
   width: 2rem;
   margin-right: 1rem;
 }
+
+code {
+  display: block;
+  white-space: pre-wrap;
+}

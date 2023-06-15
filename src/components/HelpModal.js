@@ -5,9 +5,9 @@ export function HelpModal({ show, onClose }) {
   return (
     <Modal show={show} onHide={onClose} size="lg">
       <Modal.Header closeButton>
-        <Modal.Title>How to use</Modal.Title>
+        <Modal.Title>Geekmark Help</Modal.Title>
       </Modal.Header>
-      <Modal.Body>
+      <Modal.Body style={{ height: '80vh', overflowY: 'scroll' }}>
         The Geekmark bookmark extension allows users to specify bookmark rules
         with commands and URLs. These rules provide a convenient way to navigate
         to specific URLs by typing commands in the browser's address bar.
@@ -20,18 +20,18 @@ export function HelpModal({ show, onClose }) {
         Simple rules are straightforward mappings between a command and a URL.
         When the user types the command, the extension will open the specified
         URL.
-        <h4>Rule Format</h4>
+        <h4>Rule Format:</h4>
         {/* prettier-ignore */}
-        <pre>
+        <code>
           command:: [command]
           URL:: [URL]
-        </pre>
+        </code>
         <h4>Example:</h4>
         {/* prettier-ignore */}
-        <pre>
+        <code>
           command:: g
           URL:: https://www.google.com
-        </pre>
+        </code>
         In this example, when the user types "g" in the address bar and presses
         Enter, the extension will open "https://www.google.com".
         <h3>Rules with Parameters</h3>
@@ -41,16 +41,16 @@ export function HelpModal({ show, onClose }) {
         the command and can be placed anywhere in the URL.
         <h4>Rule Format:</h4>
         {/* prettier-ignore */}
-        <pre>
+        <code>
           command:: [command] {'{{param}}'}
           URL:: [URL with {'{{param}}'} placeholder]
-        </pre>
+        </code>
         <h4>Example:</h4>
         {/* prettier-ignore */}
-        <pre>
+        <code>
           command:: mail {'{{param}}'}
           URL:: https://mail.google.com/mail/u/0/#{'{{param}}'}
-        </pre>
+        </code>
         In this example, the user can type "mail inbox" in the address bar, and
         the extension will open "https://mail.google.com/mail/u/0/#inbox".
         Similarly, typing "mail sent" will open
