@@ -11,57 +11,56 @@ export function HelpModal({ show, onClose }) {
         The Geekmark bookmark extension allows users to specify bookmark rules
         with commands and URLs. These rules provide a convenient way to navigate
         to specific URLs by typing commands in the browser's address bar.
-        <h2>Rule Format</h2>
-        Each rule consists of two parts: a command and a URL. The command is
-        what the user types in the address bar, and the URL is the corresponding
-        web address to navigate to. The extension supports simple rules as well
-        as rules with parameters.
-        <h3>Simple Rules</h3>
+        <h3>Rule Definition</h3>
+        Each rule consists of two parts: a <var>command</var> and a{' '}
+        <var>URL</var>. The command is what the user types in the address bar,
+        and the URL is the corresponding web address to navigate to. The
+        extension supports simple rules as well as rules with parameters.
+        <h4>Simple Rules</h4>
         Simple rules are straightforward mappings between a command and a URL.
         When the user types the command, the extension will open the specified
         URL.
-        <h4>Rule Format:</h4>
+        <h5>Rule Format:</h5>
         {/* prettier-ignore */}
         <code>
           command:: [command]{"\n"}
           URL:: [URL]{"\n"}
         </code>
-        <h4>Example:</h4>
+        <h5>Example:</h5>
         {/* prettier-ignore */}
         <code>
           command:: g{"\n"}
           URL:: https://www.google.com{"\n"}
         </code>
         In this example, when the user types "g" in the address bar and presses
-        Enter, the extension will open "https://www.google.com".
-        <h3>Rules with Parameters</h3>
+        Enter, the extension will open <a>https://www.google.com</a>.
+        <h4>Rules with Parameters</h4>
         Rules with parameters allow users to specify dynamic parts in the URL.
         The parameter acts as a placeholder that can be replaced with specific
         values when using the command. The parameter must be the last part of
         the command and can be placed anywhere in the URL.
-        <h4>Rule Format:</h4>
+        <h5>Rule Format:</h5>
         {/* prettier-ignore */}
         <code>
           command:: [command] {'{{param}}'}{"\n"}
           URL:: [URL with {'{{param}}'} placeholder]{"\n"}
         </code>
-        <h4>Example:</h4>
+        <h5>Example:</h5>
         {/* prettier-ignore */}
         <code>
           command:: mail {'{{param}}'}{"\n"}
           URL:: https://mail.google.com/mail/u/0/#{'{{param}}'}{"\n"}
         </code>
         In this example, the user can type "mail inbox" in the address bar, and
-        the extension will open "https://mail.google.com/mail/u/0/#inbox".
-        Similarly, typing "mail sent" will open
-        "https://mail.google.com/mail/u/0/#sent".
-        <h3>Limitations</h3>
+        the extension will open <a>https://mail.google.com/mail/u/0/#inbox</a>.
+        Similarly, typing "mail sent" will open{' '}
+        <a>https://mail.google.com/mail/u/0/#sent</a>.<h4>Limitations</h4>
         <ul>
           <li>Only one parameter is supported per rule.</li>
           <li>The parameter must be the last part of the command.</li>
           <li>The parameter can be placed anywhere in the URL.</li>
         </ul>
-        <h2>Usage</h2>
+        <h3>Usage</h3>
         To use the Geekmark bookmark extension, follow these steps:
         <ol>
           <li>Install the Geekmark extension in your browser.</li>
