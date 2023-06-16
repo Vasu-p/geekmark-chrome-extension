@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Geekmark",
   "version": "0.1",
-  "omnibox": { "keyword": "j" },
+  "omnibox": { "keyword": "g" },
   "background": {
     "service_worker": "background.js",
     "type": "module"
