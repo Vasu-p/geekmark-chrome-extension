@@ -85,7 +85,7 @@ export function RulesTab({ onRulesSave }) {
         <Form.Check
           type={'switch'}
           id={'rule-type'}
-          label={'Advanced?'}
+          label={'Smart Param?'}
           checked={newRule.type === RuleType.ADVANCED}
           inline
           onChange={(e) => {
