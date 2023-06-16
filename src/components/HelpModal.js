@@ -38,7 +38,11 @@ export function HelpModal({ show, onClose }) {
         />
         <p>
           In this example, when the user types "g" in the address bar and
-          presses Enter, the extension will open <a>https://www.google.com</a>.
+          presses Enter, the extension will open{' '}
+          <a href="#" class="link-primary">
+            https://www.google.com
+          </a>
+          .
         </p>
         <h4>Rules with Parameters</h4>
         <p>
@@ -62,8 +66,14 @@ export function HelpModal({ show, onClose }) {
         <p>
           In this example, the user can type "mail inbox" in the address bar,
           and the extension will open{' '}
-          <a>https://mail.google.com/mail/u/0/#inbox</a>. Similarly, typing
-          "mail sent" will open <a>https://mail.google.com/mail/u/0/#sent</a>.
+          <a href="#" class="link-primary">
+            https://mail.google.com/mail/u/0/#inbox
+          </a>
+          . Similarly, typing "mail sent" will open{' '}
+          <a href="#" class="link-primary">
+            https://mail.google.com/mail/u/0/#sent
+          </a>
+          .
         </p>
         <CodeBlock
           title={'Example #2'}
