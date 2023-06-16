@@ -81,6 +81,76 @@ export function HelpModal({ show, onClose }) {
             'Rule Command:: laxto {{airport}}\nRule URL:: https://www.skyscanner.com/transport/flights/lax/{{airport}}?oym=2307&selectedoday=01&iym=2307&selectediday=01'
           }
         />
+        <h4>Rules with Smart Parameters</h4>
+        <p>
+          Smart parameters are similar to normal parameters. But instead of
+          getting replaced as is, they support fuzzy search in a list of values
+          called a <var>dataset</var>. Datasets can be defined using the
+          Datasets Tab.
+        </p>
+        <h5>Defining Datasets</h5>
+        <p>
+          You can define datasets by using the Datasets tab. Note the following:
+        </p>
+        <ol>
+          <li>
+            Short Name is the one you will use to refer to the dataset during
+            rule definition.
+          </li>
+          <li>
+            Data should be JSON list of strings. It will look something like{' '}
+            <a href="https://jsoneditoronline.org/#left=cloud.fbdfd7ff1b0a49559750fb901870b7a2">
+              this
+            </a>
+            . You can use something like{' '}
+            <a href="https://jsoneditoronline.org/">JSON Editor Online</a> to
+            properly format your dataset and make sure its valid JSON.
+          </li>
+        </ol>
+        <CodeBlock
+          title={'Rule Format'}
+          body={
+            'Rule Command:: [command] {{datasetshortname}}\nRule URL::[URL with {{datasetshortname}} placeholder]'
+          }
+        />
+        <CodeBlock
+          title={'Mailbox dataset'}
+          body={
+            'Name:: mailboxes\nShort Name:: mailbox\nDataset:: ["inbox","sent","starred","imp","drafts"]'
+          }
+        />
+        <CodeBlock
+          title={'Example #1'}
+          body={
+            'Rule Command:: mail {{mailbox}}\nRule URL:: https://mail.google.com/mail/u/0/#{{mailbox}}'
+          }
+        />
+        <p>
+          Without smart parameters, you'd have to type "mail inbox" to go to
+          your inbox. With smart parameters, you can type "mail ib" or "mail in"
+          or "mail bo" in the address bar, and the extension will open{' '}
+          <a href="#" class="link-primary">
+            https://mail.google.com/mail/u/0/#inbox
+          </a>
+          . Similarly, typing "mail se" or "mail sn" or "mail st" or mail "nt"
+          will open{' '}
+          <a href="#" class="link-primary">
+            https://mail.google.com/mail/u/0/#sent
+          </a>
+          .
+        </p>
+        <p>
+          <b>
+            Note: The word fuzzy matching algorithm matches user typed word left
+            to right in the original word.
+          </b>
+          <CodeBlock
+            title={'Word Matching Example'}
+            body={
+              'Original Word:: someword\nTyped Shorthand:: sw (Match)\nTyped Shorthand:: smo (Match)\nTyped Shorthand:: ws (No Match)\nTyped Shorthand:: swm (No Match)'
+            }
+          />
+        </p>
         <h4>Limitations</h4>
         <ul>
           <li>Only one parameter is supported per rule.</li>
