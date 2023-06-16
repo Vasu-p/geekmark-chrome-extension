@@ -15,6 +15,31 @@ export function HelpModal({ show, onClose }) {
           navigate to specific URLs by typing commands in the browser's address
           bar.
         </p>
+        <h3>Usage</h3>
+        <p>
+          Typing <kbd>g</kbd> in URL bar of the browser and hitting space will
+          trigger the Geekmark omnibox. Then type in one of your rule commands
+          and press <kbd>Enter</kbd>. Voila! It will take you to your geekmarked
+          URL!!
+        </p>
+        <p>To define your rules follow these steps:</p>
+        <ol>
+          <li>Install the Geekmark extension in your browser.</li>
+          <li>Open the extension settings by clicking on extension icon.</li>
+          <li>
+            Add a new bookmark rule by specifying the command and URL.
+            <ul>
+              <li>
+                For simple rules, enter the command and the corresponding URL.
+              </li>
+              <li>
+                For rules with parameters, enter the command with the parameter
+                placeholder and the URL with the {'{{param}}'} placeholder.
+              </li>
+            </ul>
+          </li>
+          <li>Save the bookmark rule.</li>
+        </ol>
         <h3>Rule Definition</h3>
         <p>
           Each rule consists of two parts: a <var>command</var> and a{' '}
@@ -158,31 +183,6 @@ export function HelpModal({ show, onClose }) {
           <li>The parameter must be the last part of the command.</li>
           <li>The parameter can be placed anywhere in the URL.</li>
         </ul>
-        <h3>Usage</h3>
-        <p>
-          Typing <kbd>g</kbd> in URL bar of the browser and hitting space will
-          trigger the Geekmark omnibox. Then type in one of your rule commands
-          and press <kbd>Enter</kbd>. Voila! It will take you to your geekmarked
-          URL!!
-        </p>
-        <p>To define your rules follow these steps:</p>
-        <ol>
-          <li>Install the Geekmark extension in your browser.</li>
-          <li>Open the extension settings by clicking on extension icon.</li>
-          <li>
-            Add a new bookmark rule by specifying the command and URL.
-            <ul>
-              <li>
-                For simple rules, enter the command and the corresponding URL.
-              </li>
-              <li>
-                For rules with parameters, enter the command with the parameter
-                placeholder and the URL with the {'{{param}}'} placeholder.
-              </li>
-            </ul>
-          </li>
-          <li>Save the bookmark rule.</li>
-        </ol>
       </Modal.Body>
     </Modal>
   );
