@@ -1,5 +1,6 @@
 import React from 'react';
 import { Modal } from 'react-bootstrap';
+import { CodeBlock } from '../common/CodeBlock';
 
 export function HelpModal({ show, onClose }) {
   return (
@@ -27,18 +28,14 @@ export function HelpModal({ show, onClose }) {
           When the user types the command, the extension will open the specified
           URL.
         </p>
-        <h5>Rule Format:</h5>
-        {/* prettier-ignore */}
-        <code>
-          command:: [command]{"\n"}
-          URL:: [URL]{"\n"}
-        </code>
-        <h5>Example:</h5>
-        {/* prettier-ignore */}
-        <code>
-          command:: g{"\n"}
-          URL:: https://www.google.com{"\n"}
-        </code>
+        <CodeBlock
+          title={'Rule Format'}
+          body={'Rule Command:: [command]\nRule URL:: [URL]'}
+        />
+        <CodeBlock
+          title={'Example #1'}
+          body={'Rule Command:: g\nRule URL:: https://www.google.com'}
+        />
         <p>
           In this example, when the user types "g" in the address bar and
           presses Enter, the extension will open <a>https://www.google.com</a>.
@@ -50,24 +47,30 @@ export function HelpModal({ show, onClose }) {
           values when using the command. The parameter must be the last part of
           the command and can be placed anywhere in the URL.
         </p>
-        <h5>Rule Format:</h5>
-        {/* prettier-ignore */}
-        <code>
-          command:: [command] {'{{param}}'}{"\n"}
-          URL:: [URL with {'{{param}}'} placeholder]{"\n"}
-        </code>
-        <h5>Example:</h5>
-        {/* prettier-ignore */}
-        <code>
-          command:: mail {'{{param}}'}{"\n"}
-          URL:: https://mail.google.com/mail/u/0/#{'{{param}}'}{"\n"}
-        </code>
+        <CodeBlock
+          title={'Rule Format'}
+          body={
+            'Rule Command:: [command] {{param}}\nRule URL::[URL with {{param}} placeholder]'
+          }
+        />
+        <CodeBlock
+          title={'Example #1'}
+          body={
+            'Rule Command:: mail {{param}}\nRule URL:: https://mail.google.com/mail/u/0/#{{param}}'
+          }
+        />
         <p>
           In this example, the user can type "mail inbox" in the address bar,
           and the extension will open{' '}
           <a>https://mail.google.com/mail/u/0/#inbox</a>. Similarly, typing
           "mail sent" will open <a>https://mail.google.com/mail/u/0/#sent</a>.
         </p>
+        <CodeBlock
+          title={'Example #2'}
+          body={
+            'Rule Command:: laxto {{airport}}\nRule URL:: https://www.skyscanner.com/transport/flights/lax/{{airport}}?oym=2307&selectedoday=01&iym=2307&selectediday=01'
+          }
+        />
         <h4>Limitations</h4>
         <ul>
           <li>Only one parameter is supported per rule.</li>
