@@ -37,8 +37,8 @@ export function HelpModal({ show, onClose }) {
           body={'Rule Command:: g\nRule URL:: https://www.google.com'}
         />
         <p>
-          In this example, when the user types "g" in the address bar and
-          presses Enter, the extension will open{' '}
+          In this example, when the user types <kbd>g</kbd> in the address bar
+          and presses Enter, the extension will open{' '}
           <a href="#" class="link-primary">
             https://www.google.com
           </a>
@@ -64,12 +64,12 @@ export function HelpModal({ show, onClose }) {
           }
         />
         <p>
-          In this example, the user can type "mail inbox" in the address bar,
-          and the extension will open{' '}
+          In this example, the user can type <kbd>mail inbox</kbd> in the
+          address bar, and the extension will open{' '}
           <a href="#" class="link-primary">
             https://mail.google.com/mail/u/0/#inbox
           </a>
-          . Similarly, typing "mail sent" will open{' '}
+          . Similarly, typing <kbd>mail sent</kbd> will open{' '}
           <a href="#" class="link-primary">
             https://mail.google.com/mail/u/0/#sent
           </a>
@@ -126,14 +126,15 @@ export function HelpModal({ show, onClose }) {
           }
         />
         <p>
-          Without smart parameters, you'd have to type "mail inbox" to go to
-          your inbox. With smart parameters, you can type "mail ib" or "mail in"
-          or "mail bo" in the address bar, and the extension will open{' '}
+          Without smart parameters, you'd have to type <kbd>mail inbox</kbd> to
+          go to your inbox. With smart parameters, you can type{' '}
+          <kbd>mail ib</kbd> or <kbd>mail in</kbd> or <kbd>mail bo</kbd> in the
+          address bar, and the extension will open{' '}
           <a href="#" class="link-primary">
             https://mail.google.com/mail/u/0/#inbox
           </a>
-          . Similarly, typing "mail se" or "mail sn" or "mail st" or mail "nt"
-          will open{' '}
+          . Similarly, typing <kbd>mail se</kbd> or <kbd>mail sn</kbd> or{' '}
+          <kbd>mail st</kbd> or <kbd>mail nt</kbd> will open{' '}
           <a href="#" class="link-primary">
             https://mail.google.com/mail/u/0/#sent
           </a>
