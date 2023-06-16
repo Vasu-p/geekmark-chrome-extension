@@ -145,13 +145,13 @@ export function HelpModal({ show, onClose }) {
             Note: The word fuzzy matching algorithm matches user typed word left
             to right in the original word.
           </b>
-          <CodeBlock
-            title={'Word Matching Example'}
-            body={
-              'Original Word:: someword\nTyped Shorthand:: sw (Match)\nTyped Shorthand:: smo (Match)\nTyped Shorthand:: ws (No Match)\nTyped Shorthand:: swm (No Match)'
-            }
-          />
         </p>
+        <CodeBlock
+          title={'Word Matching Example'}
+          body={
+            'Original Word:: someword\nTyped Shorthand:: sw (Match)\nTyped Shorthand:: smo (Match)\nTyped Shorthand:: ws (No Match)\nTyped Shorthand:: swm (No Match)'
+          }
+        />
         <h4>Limitations</h4>
         <ul>
           <li>Only one parameter is supported per rule.</li>
