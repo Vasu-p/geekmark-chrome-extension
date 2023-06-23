@@ -3,10 +3,12 @@ import React, { useEffect, useState, useCallback } from 'react';
 
 // components
 import { Button, Badge, Stack, FloatingLabel, Form } from 'react-bootstrap';
+import { BookmarkStar, Bookmark, Book } from 'react-bootstrap-icons';
 
 import { URLInput } from './URLInput';
 
 import { RuleType } from '../constants';
+import { RuleTypeIcon } from './RuleTypeIcon';
 
 export function RulesTab({ onRulesSave }) {
   // {command:'', url: ''}
@@ -37,8 +39,8 @@ export function RulesTab({ onRulesSave }) {
     <Stack className="mt-5" gap={3}>
       <Stack gap={2}>
         {rules.map((rule) => (
-          <Stack gap={1} direction={'horizontal'}>
-            <Badge>{rule.type === RuleType.SIMPLE ? 'S' : 'A'}</Badge>
+          <Stack gap={1} direction={'horizontal'} key={rule.command}>
+            <RuleTypeIcon type={rule.type} />
             <URLInput
               label={rule.command}
               value={rule.url}
