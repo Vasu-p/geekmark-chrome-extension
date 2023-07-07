@@ -44,7 +44,7 @@ export function generateUrlForAdvancedRule(text, rule, dataset) {
   // replace url param with found string
   return url.replace(
     paramRegex,
-    get_closest_match(paramValue, dataset.values, (record) => record.name).name // hardcode to look for name (todo take input form user)
+    get_closest_match(paramValue, dataset.values, (record) => record)
   );
 }
 

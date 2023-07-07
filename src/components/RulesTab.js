@@ -2,8 +2,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 
 // components
-import { Button, Badge, Stack, FloatingLabel, Form } from 'react-bootstrap';
-import { BookmarkStar, Bookmark, Book } from 'react-bootstrap-icons';
+import { Button, Stack, FloatingLabel, Form } from 'react-bootstrap';
 
 import { URLInput } from './URLInput';
 
