@@ -2,45 +2,45 @@ import { get_closest_match } from './string-utils.js';
 
 export const paramRegex = /{{(.*?)}}/g;
 
-export function matches(text, ruleCommand) {
+export function matches(typedCommand, ruleCommand) {
   const ruleRegex = generateRuleRegex(ruleCommand);
   if (!ruleRegex) {
     return false;
   }
-  return ruleRegex.test(text);
+  return ruleRegex.test(typedCommand);
 }
 
-export function generateUrlForSimpleRule(text, rule) {
-  // text "abcxyz def"
+export function generateUrlForSimpleRule(typedCommand, rule) {
+  // typedCommand "abcxyz def"
   const command = rule.command; // "abcxyz {param}"
   const url = rule.url; // "replacement {param}""
   const param = rule.command.match(paramRegex)[0];
 
   // find position of param in command
   const commandParamPosition = command.indexOf(param);
-  // find string at above position in text
-  const paramValue = text.substr(commandParamPosition);
+  // find string at above position in typedCommand
+  const paramValue = typedCommand.substr(commandParamPosition);
   console.log(command, url, param, paramValue);
   // replace url param with found string
   return url.replace(param, paramValue);
 }
 
-export function generateUrlForAdvancedRule(text, rule, dataset) {
+export function generateUrlForAdvancedRule(typedCommand, rule, dataset) {
   // rule { command: '', url: '', type: 'advanced', dataset: 'repositories'(e.g.) }
   // in every rule there is only 1 param allowed
   // in advance rule that parameter is associated with a dataset object
   // advance rule doesnt substitute the user typed param directly in rule url (as simple rule does)
   // in advance rule, we find the closest string in dataset which matches the user typed param and substitute that
 
-  // text "abcxyz def"
+  // typedCommand "abcxyz def"
   const command = rule.command; // "abcxyz {param}"
   const url = rule.url; // "replacement {param}""
   const param = rule.command.match(paramRegex)[0];
 
   // find position of param in command
   const commandParamPosition = command.indexOf(param);
-  // find string at above position in text
-  const paramValue = text.substr(commandParamPosition, param.length);
+  // find string at above position in typedCommand
+  const paramValue = typedCommand.substr(commandParamPosition, param.length);
   // replace url param with found string
   return url.replace(
     paramRegex,
@@ -64,17 +64,6 @@ export function getMatchingDataset(datasets, rule) {
   return datasets.filter(
     (dataset) => dataset.shortName === paramWithoutBraces
   )[0];
-}
-
-/**
- * strips parameter i.e. {{abc}} from end of string
- *
- * @param {*} str
- * @returns str with parameters stripped
- */
-function stripParameter(str) {
-  const found = str.match(paramRegex);
-  return found ? str.replace(found[0], '').trim() : undefined;
 }
 
 function generateRuleRegex(str) {

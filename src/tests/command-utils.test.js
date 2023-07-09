@@ -16,8 +16,8 @@ describe('generateUrlWithParameter', () => {
       'https://def',
     ],
     // ['abcdefxyz', { command: 'abc{{param}}xyz', url: 'https://{{param}}' }, 'https://def'], // doesnt work as of now
-  ])('Works', (text, rule, expected) => {
-    expect(generateUrlForSimpleRule(text, rule)).toEqual(expected);
+  ])('Works', (typedCommand, rule, expected) => {
+    expect(generateUrlForSimpleRule(typedCommand, rule)).toEqual(expected);
   });
 });
 
@@ -27,9 +27,9 @@ describe('matches', () => {
     ['abcdef', 'abc{{param}}', true],
     ['defabc', 'abc{{param}}', false],
     ['abcdef', 'dac{{param}}', false],
-    ['ab text', 'ab {{par}}', true],
-    ['abcd text', 'ab {{par}}', false],
-  ])('Works for %s', (text, ruleCommand, expected) => {
-    expect(matches(text, ruleCommand)).toBe(expected);
+    ['ab typedCommand', 'ab {{par}}', true],
+    ['abcd typedCommand', 'ab {{par}}', false],
+  ])('Works for %s', (typedCommand, ruleCommand, expected) => {
+    expect(matches(typedCommand, ruleCommand)).toBe(expected);
   });
 });

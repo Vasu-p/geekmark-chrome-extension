@@ -8,24 +8,24 @@ import {
   getMatchingDataset,
 } from './utils/command-utils.js';
 
-chrome.omnibox.onInputEntered.addListener(async (text) => {
+chrome.omnibox.onInputEntered.addListener(async (typedCommand) => {
   let newURL = null;
 
   const { rules } = await chrome.storage.local.get(['rules']);
   const { datasets } = await chrome.storage.local.get(['datasets']);
 
   rules.every((rule) => {
-    if (rule.command === text) {
+    if (rule.command === typedCommand) {
       newURL = rule.url;
       return false;
     }
-    if (matches(text, rule.command)) {
+    if (matches(typedCommand, rule.command)) {
       if (rule.type === RuleType.SIMPLE) {
-        newURL = generateUrlForSimpleRule(text, rule);
+        newURL = generateUrlForSimpleRule(typedCommand, rule);
       }
       if (rule.type === RuleType.ADVANCED) {
         const dataset = getMatchingDataset(datasets, rule);
-        newURL = generateUrlForAdvancedRule(text, rule, dataset);
+        newURL = generateUrlForAdvancedRule(typedCommand, rule, dataset);
       }
       return false;
     }
