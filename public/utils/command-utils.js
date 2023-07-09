@@ -36,11 +36,8 @@ export function generateUrlForAdvancedRule(typedCommand, rule, dataset) {
   const command = rule.command; // "abcxyz {{param}}"
   const url = rule.url; // "replacement {{param}}""
   const commandParam = getCommandParam(command); // "{{param}}"
-  const commandParamWithoutBraces = commandParam
-    .replaceAll('{', '')
-    .replaceAll('}', ''); // "param"
 
-  if (commandParamWithoutBraces.includes('.')) {
+  if (commandParam.includes('.')) {
     return generateUrlForAdvancedRuleWithNestedParam();
   } else {
     return generateUrlForAdvancedRuleWithSimpleParam(typedCommand, rule);
