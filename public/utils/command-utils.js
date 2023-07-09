@@ -40,7 +40,11 @@ export function generateUrlForAdvancedRule(typedCommand, rule, dataset) {
   if (commandParam.includes('.')) {
     return generateUrlForAdvancedRuleWithNestedParam();
   } else {
-    return generateUrlForAdvancedRuleWithSimpleParam(typedCommand, rule);
+    return generateUrlForAdvancedRuleWithSimpleParam(
+      typedCommand,
+      rule,
+      dataset
+    );
   }
 }
 
@@ -79,7 +83,11 @@ function generateUrlForAdvancedRuleWithNestedParam() {
   // TODO
 }
 
-function generateUrlForAdvancedRuleWithSimpleParam(typedCommand, rule) {
+function generateUrlForAdvancedRuleWithSimpleParam(
+  typedCommand,
+  rule,
+  dataset
+) {
   const param = getCommandParam(rule.command);
   // find position of param in command
   const commandParamPosition = rule.command.indexOf(param);
@@ -88,6 +96,6 @@ function generateUrlForAdvancedRuleWithSimpleParam(typedCommand, rule) {
   // replace url param with found string
   return rule.url.replace(
     paramRegex,
-    get_closest_match(paramValue, rule.dataset.values, (record) => record)
+    get_closest_match(paramValue, dataset.values, (record) => record)
   );
 }
