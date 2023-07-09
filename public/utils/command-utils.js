@@ -43,7 +43,7 @@ export function generateUrlForAdvancedRule(typedCommand, rule, dataset) {
   if (commandParamWithoutBraces.includes('.')) {
     return generateUrlForAdvancedRuleWithNestedParam();
   } else {
-    return generateUrlForAdvancedRuleWithSimpleParam();
+    return generateUrlForAdvancedRuleWithSimpleParam(typedCommand, rule);
   }
 }
 
