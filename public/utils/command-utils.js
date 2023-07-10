@@ -32,9 +32,7 @@ export function generateUrlForAdvancedRule(typedCommand, rule, dataset) {
   // advance rule doesnt substitute the user typed param directly in rule url (as simple rule does)
   // in advance rule, we find the closest string in dataset which matches the user typed param and substitute that
 
-  // typedCommand "abcxyz def"
-  const command = rule.command; // "abcxyz {{param}}"
-  const url = rule.url; // "replacement {{param}}""
+  const command = rule.command;
   const commandParam = getCommandParam(command); // "{{param}}"
 
   if (commandParam.includes('.')) {
@@ -79,11 +77,7 @@ function getCommandParam(command) {
   return found ? found[0] : undefined;
 }
 
-function generateUrlForAdvancedRuleWithNestedParam() {
-  // TODO
-}
-
-function generateUrlForAdvancedRuleWithSimpleParam(
+function generateUrlForAdvancedRuleWithNestedParam(
   typedCommand,
   rule,
   dataset
@@ -92,7 +86,28 @@ function generateUrlForAdvancedRuleWithSimpleParam(
   // find position of param in command
   const commandParamPosition = rule.command.indexOf(param);
   // find string at above position in typedCommand
-  const paramValue = typedCommand.substr(commandParamPosition, param.length);
+  const paramValue = typedCommand.substr(commandParamPosition).trim();
+  // replace url param with found string
+  return rule.url.replace(
+    paramRegex,
+    get_closest_match(
+      paramValue,
+      dataset.values,
+      (record) => record[rule.command.split('.')[1]]
+    )
+  );
+}
+
+function generateUrlForAdvancedRuleWithSimpleParam(
+  typedCommand, // typedCommand "abcxyz def"
+  rule,
+  dataset // { values: ['abc', 'def', 'ghi'], shortName: 'repo', name: 'repositories' }
+) {
+  const param = getCommandParam(rule.command);
+  // find position of param in command
+  const commandParamPosition = rule.command.indexOf(param);
+  // find string at above position in typedCommand
+  const paramValue = typedCommand.substr(commandParamPosition).trim();
   // replace url param with found string
   return rule.url.replace(
     paramRegex,
