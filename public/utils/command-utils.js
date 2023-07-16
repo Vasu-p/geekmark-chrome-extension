@@ -1,6 +1,7 @@
 import { get_closest_match } from './string-utils.js';
 
 export const paramRegex = /{{(.*?)}}/g;
+export const bracesRegex = /{{|}}/g;
 
 export function matches(typedCommand, ruleCommand) {
   const ruleRegex = generateRuleRegex(ruleCommand);
@@ -52,9 +53,7 @@ export function generateUrlForAdvancedRule(typedCommand, rule, dataset) {
 
 export function getMatchingDataset(datasets, rule) {
   const commandParam = rule.command.match(paramRegex)[0];
-  const commandParamWithoutBraces = commandParam
-    .replaceAll('{', '')
-    .replaceAll('}', '');
+  const commandParamWithoutBraces = commandParam.replace(bracesRegex, '');
 
   const datasetFromRule = isRuleWithNestedParam(rule)
     ? commandParamWithoutBraces.split('.')[0]
@@ -81,13 +80,14 @@ function isRuleWithNestedParam(rule) {
   return commandParam.includes('.');
 }
 
-function generateUrlForAdvancedRuleWithNestedParam(
+export function generateUrlForAdvancedRuleWithNestedParam(
   typedCommand,
   rule,
   dataset
 ) {
   const commandParam = getCommandParam(rule.command); // {{repo.name}}
-  const commandParamAccessor = commandParam.split('.')[1]; // 'name'
+  const commandParamWithoutBraces = commandParam.replace(bracesRegex, ''); // repo.name
+  const commandParamAccessor = commandParamWithoutBraces.split('.')[1]; // 'name'
   // find position of param in command
   const commandParamPosition = rule.command.indexOf(commandParam); // index of {{repo.name}} in command
   // find string at above position in typedCommand
