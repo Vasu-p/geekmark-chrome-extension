@@ -82,20 +82,30 @@ function generateUrlForAdvancedRuleWithNestedParam(
   rule,
   dataset
 ) {
-  const param = getCommandParam(rule.command);
+  const commandParam = getCommandParam(rule.command); // {{repo.name}}
+  const commandParamAccessor = commandParam.split('.')[1]; // 'name'
   // find position of param in command
-  const commandParamPosition = rule.command.indexOf(param);
+  const commandParamPosition = rule.command.indexOf(commandParam); // index of {{repo.name}} in command
   // find string at above position in typedCommand
-  const paramValue = typedCommand.substr(commandParamPosition).trim();
-  // replace url param with found string
-  return rule.url.replace(
-    paramRegex,
-    get_closest_match(
-      paramValue,
-      dataset.values,
-      (record) => record[rule.command.split('.')[1]]
-    )
-  );
+  const commandParamValue = typedCommand.substr(commandParamPosition).trim(); // "name" value to fuzzy search for in dataset
+  // e.g. rule url with more than 1 params = "https://github.com/repos/{{repo.owner}}/{{repo.name}}/issues"
+
+  const foundDataset = get_closest_match(
+    commandParamValue,
+    dataset.values,
+    (record) => record[commandParamAccessor]
+  ); // { name: 'abc', owner: 'def' }
+
+  // find all params in rule url
+  const urlParams = rule.url.match(paramRegex); // ['{{repo.owner}}', '{{repo.name}}']
+  // replace all params in rule url with fuzzy searched values
+  const url = urlParams.reduce((acc, param) => {
+    const paramAccessor = param.split('.')[1]; // 'owner'
+    const paramValue = foundDataset[paramAccessor]; // 'def'
+    return acc.replace(param, paramValue);
+  }, rule.url);
+
+  return url;
 }
 
 function generateUrlForAdvancedRuleWithSimpleParam(
