@@ -104,7 +104,8 @@ export function generateUrlForAdvancedRuleWithNestedParam(
   const urlParams = rule.url.match(paramRegex); // ['{{repo.owner}}', '{{repo.name}}']
   // replace all params in rule url with fuzzy searched values
   const url = urlParams.reduce((acc, param) => {
-    const paramAccessor = param.split('.')[1]; // 'owner'
+    const paramWithoutBraces = param.replace(bracesRegex, ''); // 'repo.owner'
+    const paramAccessor = paramWithoutBraces.split('.')[1]; // 'owner'
     const paramValue = foundDataset[paramAccessor]; // 'def'
     return acc.replace(param, paramValue);
   }, rule.url);
