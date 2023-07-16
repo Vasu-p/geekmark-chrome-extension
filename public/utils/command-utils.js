@@ -51,21 +51,16 @@ export function generateUrlForAdvancedRule(typedCommand, rule, dataset) {
 }
 
 export function getMatchingDataset(datasets, rule) {
-  const param = rule.command.match(paramRegex)[0];
-  const paramWithoutBraces = param.replaceAll('{', '').replaceAll('}', '');
+  const commandParam = rule.command.match(paramRegex)[0];
+  const commandParamWithoutBraces = commandParam
+    .replaceAll('{', '')
+    .replaceAll('}', '');
 
-  console.log(
-    'param',
-    param,
-    'param without braces',
-    paramWithoutBraces,
-    'rule',
-    rule
-  );
+  const datasetFromRule = isRuleWithNestedParam(rule)
+    ? commandParamWithoutBraces.split('.')[0]
+    : commandParamWithoutBraces;
 
-  return datasets.filter(
-    (dataset) => dataset.shortName === paramWithoutBraces
-  )[0];
+  return datasets.filter((dataset) => dataset.shortName === datasetFromRule)[0];
 }
 
 function generateRuleRegex(str) {
@@ -79,6 +74,11 @@ function generateRuleRegex(str) {
 function getCommandParam(command) {
   const found = command.match(paramRegex);
   return found ? found[0] : undefined;
+}
+
+function isRuleWithNestedParam(rule) {
+  const commandParam = getCommandParam(rule.command);
+  return commandParam.includes('.');
 }
 
 function generateUrlForAdvancedRuleWithNestedParam(
