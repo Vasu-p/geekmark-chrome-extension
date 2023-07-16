@@ -1,6 +1,7 @@
 import {
   generateUrlForSimpleRule,
   matches,
+  generateUrlForAdvancedRuleWithNestedParam,
 } from '../../public/utils/command-utils';
 
 describe('generateUrlWithParameter', () => {
@@ -31,5 +32,29 @@ describe('matches', () => {
     ['abcd typedCommand', 'ab {{par}}', false],
   ])('Works for %s', (typedCommand, ruleCommand, expected) => {
     expect(matches(typedCommand, ruleCommand)).toBe(expected);
+  });
+});
+
+describe('generateUrlForAdvancedRuleWithNestedParam', () => {
+  it.each([
+    [
+      'comm ab',
+      {
+        command: 'comm {{dataset.x}}',
+        url: 'https://site/{{dataset.x}}/{{dataset.y}}',
+      },
+      {
+        shortName: 'dataset',
+        values: [
+          { x: 'abc', y: 'def1' },
+          { x: 'def', y: 'def2' },
+        ],
+      },
+      'https://site/abc/def1',
+    ],
+  ])(`Works for %s`, (typedCommand, rule, dataset, expected) => {
+    expect(
+      generateUrlForAdvancedRuleWithNestedParam(typedCommand, rule, dataset)
+    ).toEqual(expected);
   });
 });
