@@ -65,7 +65,7 @@ export function AddModal({ show, onSuccess, onClose }) {
             <Form.Label>JSON</Form.Label>
             <Form.Control
               as={'textarea'}
-              placeholder='["abc", "def", ...]'
+              placeholder='["value1", "value2", ...] or [{"key1": "value1", "key2": "value2"}, ...]'
               style={{ height: '300px' }}
               onChange={(e) => {
                 try {

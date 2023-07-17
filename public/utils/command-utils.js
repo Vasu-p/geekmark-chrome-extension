@@ -124,8 +124,11 @@ function generateUrlForAdvancedRuleWithSimpleParam(
   // find string at above position in typedCommand
   const paramValue = typedCommand.substr(commandParamPosition).trim();
   // replace url param with found string
-  return rule.url.replace(
-    paramRegex,
-    get_closest_match(paramValue, dataset.values, (record) => record)
-  );
+  const toReplaceValueFromDataset =
+    typeof dataset.values[0] === 'string'
+      ? get_closest_match(paramValue, dataset.values, (record) => record)
+      : get_closest_match(paramValue, dataset.values, (record) => record.name)
+          .name;
+
+  return rule.url.replace(paramRegex, toReplaceValueFromDataset);
 }
