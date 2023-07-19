@@ -210,14 +210,20 @@ export function HelpModal({ show, onClose }) {
         />
         <p>
           In above example we define rule's command to fuzzy search over one of
-          the attributes of the dataset(<pre>repo</pre> in our case). The rule's
-          URL can use any of the attributes of the dataset one or more times. If
-          you type <kbd>repo rena</kbd> the extension will open{' '}
+          the attributes of the dataset(<code>repo</code> in our case). The
+          rule's URL can use any of the attributes of the dataset one or more
+          times.
+        </p>
+        <p>
+          If you type <kbd>repo rena</kbd> the extension will open{' '}
           <a href="#" class="link-primary">
             https://github.com/facebook/react-native
           </a>
-          . Similarly, typing <kbd>repo ui</kbd> will open
-          <a>https://github.com/SAP/ui5-webcomponents</a>.
+          .
+        </p>
+        <p>
+          Similarly, typing <kbd>repo ui</kbd> will open
+          <a href="https://github.com/SAP/ui5-webcomponents"></a>.
         </p>
         <p>
           <b>
