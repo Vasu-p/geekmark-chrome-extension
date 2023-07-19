@@ -118,7 +118,9 @@ export function HelpModal({ show, onClose }) {
               this
             </a>{' '}
             or{' '}
-            <a href="https://jsoneditoronline.org/#left=cloud.25bc7b7c4f5a412a9bb2b62152b48d06"></a>
+            <a href="https://jsoneditoronline.org/#left=cloud.25bc7b7c4f5a412a9bb2b62152b48d06">
+              this
+            </a>
             . You can use something like{' '}
             <a href="https://jsoneditoronline.org/">JSON Editor Online</a> to
             properly format your dataset and make sure its valid JSON.
