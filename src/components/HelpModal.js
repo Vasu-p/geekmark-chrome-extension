@@ -26,18 +26,7 @@ export function HelpModal({ show, onClose }) {
         <ol>
           <li>Install the Geekmark extension in your browser.</li>
           <li>Open the extension settings by clicking on extension icon.</li>
-          <li>
-            Add a new bookmark rule by specifying the command and URL.
-            <ul>
-              <li>
-                For simple rules, enter the command and the corresponding URL.
-              </li>
-              <li>
-                For rules with parameters, enter the command with the parameter
-                placeholder and the URL with the {'{{param}}'} placeholder.
-              </li>
-            </ul>
-          </li>
+          <li>Add a new bookmark rule by specifying the command and URL.</li>
           <li>Save the bookmark rule.</li>
         </ol>
         <h3>Rule Definition</h3>
