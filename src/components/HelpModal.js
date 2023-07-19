@@ -26,18 +26,7 @@ export function HelpModal({ show, onClose }) {
         <ol>
           <li>Install the Geekmark extension in your browser.</li>
           <li>Open the extension settings by clicking on extension icon.</li>
-          <li>
-            Add a new bookmark rule by specifying the command and URL.
-            <ul>
-              <li>
-                For simple rules, enter the command and the corresponding URL.
-              </li>
-              <li>
-                For rules with parameters, enter the command with the parameter
-                placeholder and the URL with the {'{{param}}'} placeholder.
-              </li>
-            </ul>
-          </li>
+          <li>Add a new bookmark rule by specifying the command and URL.</li>
           <li>Save the bookmark rule.</li>
         </ol>
         <h3>Rule Definition</h3>
@@ -64,7 +53,7 @@ export function HelpModal({ show, onClose }) {
         <p>
           In this example, when the user types <kbd>g</kbd> in the address bar
           and presses Enter, the extension will open{' '}
-          <a href="#" class="link-primary">
+          <a href="#" className="link-primary">
             https://www.google.com
           </a>
           .
@@ -91,11 +80,11 @@ export function HelpModal({ show, onClose }) {
         <p>
           In this example, the user can type <kbd>mail inbox</kbd> in the
           address bar, and the extension will open{' '}
-          <a href="#" class="link-primary">
+          <a href="#" className="link-primary">
             https://mail.google.com/mail/u/0/#inbox
           </a>
           . Similarly, typing <kbd>mail sent</kbd> will open{' '}
-          <a href="#" class="link-primary">
+          <a href="#" className="link-primary">
             https://mail.google.com/mail/u/0/#sent
           </a>
           .
@@ -123,8 +112,13 @@ export function HelpModal({ show, onClose }) {
             rule definition.
           </li>
           <li>
-            Data should be JSON list of strings. It will look something like{' '}
+            Data should be JSON list of strings or JSON list of objects. It will
+            look something like{' '}
             <a href="https://jsoneditoronline.org/#left=cloud.fbdfd7ff1b0a49559750fb901870b7a2">
+              this
+            </a>{' '}
+            or{' '}
+            <a href="https://jsoneditoronline.org/#left=cloud.25bc7b7c4f5a412a9bb2b62152b48d06">
               this
             </a>
             . You can use something like{' '}
@@ -133,9 +127,15 @@ export function HelpModal({ show, onClose }) {
           </li>
         </ol>
         <CodeBlock
-          title={'Rule Format'}
+          title={'Rule Format 1'}
           body={
             'Rule Command:: [command] {{datasetshortname}}\nRule URL::[URL with {{datasetshortname}} placeholder]'
+          }
+        />
+        <CodeBlock
+          title={'Rule Format 2'}
+          body={
+            'Rule Command:: [command] {{datasetshortname.propertyX}}\nRule URL::[URL with {{datasetshortname.property1}}..{{datasetshortname.propertyN}} placeholder]'
           }
         />
         <CodeBlock
@@ -155,13 +155,77 @@ export function HelpModal({ show, onClose }) {
           go to your inbox. With smart parameters, you can type{' '}
           <kbd>mail ib</kbd> or <kbd>mail in</kbd> or <kbd>mail bo</kbd> in the
           address bar, and the extension will open{' '}
-          <a href="#" class="link-primary">
+          <a href="#" className="link-primary">
             https://mail.google.com/mail/u/0/#inbox
           </a>
           . Similarly, typing <kbd>mail se</kbd> or <kbd>mail sn</kbd> or{' '}
           <kbd>mail st</kbd> or <kbd>mail nt</kbd> will open{' '}
-          <a href="#" class="link-primary">
+          <a href="#" className="link-primary">
             https://mail.google.com/mail/u/0/#sent
+          </a>
+          .
+        </p>
+        <CodeBlock
+          title={'Github Repositories dataset'}
+          body={
+            <>
+              <p>
+                Name:: repositories
+                <br />
+                Short Name:: repo
+              </p>
+              <pre>
+                Dataset::
+                {JSON.stringify([
+                  {
+                    org: 'facebook',
+                    repo: 'react',
+                  },
+                  {
+                    org: 'facebook',
+                    repo: 'react-native',
+                  },
+                  {
+                    org: 'google',
+                    repo: 'guava',
+                  },
+                  {
+                    org: 'SAP',
+                    repo: 'ui5-webcomponents',
+                  },
+                  {
+                    org: 'SAP',
+                    repo: 'luigi',
+                  },
+                ])}
+              </pre>
+            </>
+          }
+        />
+        <CodeBlock
+          title={'Example #2'}
+          body={
+            'Rule Command:: repo {{repo.repo}}\nRule URL:: https://github.com/{{repo.org}}/{{repo.repo}}'
+          }
+        />
+        <p>
+          In above example we define rule's command to fuzzy search over one of
+          the attributes of the dataset(
+          <code style={{ display: 'inline' }}>repo</code> in above case). The
+          rule's URL can use any of the attributes of the dataset one or more
+          times.
+        </p>
+        <p>
+          If you type <kbd>repo rena</kbd> the extension will open{' '}
+          <a href="#" className="link-primary">
+            https://github.com/facebook/react-native
+          </a>
+          .
+        </p>
+        <p>
+          Similarly, typing <kbd>repo ui</kbd> will open{' '}
+          <a href="#" className="link-primary">
+            https://github.com/SAP/ui5-webcomponents
           </a>
           .
         </p>
@@ -179,9 +243,10 @@ export function HelpModal({ show, onClose }) {
         />
         <h4>Limitations</h4>
         <ul>
-          <li>Only one parameter is supported per rule.</li>
-          <li>The parameter must be the last part of the command.</li>
-          <li>The parameter can be placed anywhere in the URL.</li>
+          <li>Only one dataset can be used per rule</li>
+          <li>Only one parameter can be used in rule's command</li>
+          <li>The parameter must be the last part of the command</li>
+          <li>The parameter can be placed anywhere in the URL</li>
         </ul>
       </Modal.Body>
     </Modal>
