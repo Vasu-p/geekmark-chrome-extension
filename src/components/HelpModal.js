@@ -53,7 +53,7 @@ export function HelpModal({ show, onClose }) {
         <p>
           In this example, when the user types <kbd>g</kbd> in the address bar
           and presses Enter, the extension will open{' '}
-          <a href="#" class="link-primary">
+          <a href="#" className="link-primary">
             https://www.google.com
           </a>
           .
@@ -80,11 +80,11 @@ export function HelpModal({ show, onClose }) {
         <p>
           In this example, the user can type <kbd>mail inbox</kbd> in the
           address bar, and the extension will open{' '}
-          <a href="#" class="link-primary">
+          <a href="#" className="link-primary">
             https://mail.google.com/mail/u/0/#inbox
           </a>
           . Similarly, typing <kbd>mail sent</kbd> will open{' '}
-          <a href="#" class="link-primary">
+          <a href="#" className="link-primary">
             https://mail.google.com/mail/u/0/#sent
           </a>
           .
@@ -155,12 +155,12 @@ export function HelpModal({ show, onClose }) {
           go to your inbox. With smart parameters, you can type{' '}
           <kbd>mail ib</kbd> or <kbd>mail in</kbd> or <kbd>mail bo</kbd> in the
           address bar, and the extension will open{' '}
-          <a href="#" class="link-primary">
+          <a href="#" className="link-primary">
             https://mail.google.com/mail/u/0/#inbox
           </a>
           . Similarly, typing <kbd>mail se</kbd> or <kbd>mail sn</kbd> or{' '}
           <kbd>mail st</kbd> or <kbd>mail nt</kbd> will open{' '}
-          <a href="#" class="link-primary">
+          <a href="#" className="link-primary">
             https://mail.google.com/mail/u/0/#sent
           </a>
           .
@@ -217,14 +217,17 @@ export function HelpModal({ show, onClose }) {
         </p>
         <p>
           If you type <kbd>repo rena</kbd> the extension will open{' '}
-          <a href="#" class="link-primary">
+          <a href="#" className="link-primary">
             https://github.com/facebook/react-native
           </a>
           .
         </p>
         <p>
           Similarly, typing <kbd>repo ui</kbd> will open
-          <a href="https://github.com/SAP/ui5-webcomponents"></a>.
+          <a href="#" className="link-primary">
+            https://github.com/SAP/ui5-webcomponents
+          </a>
+          .
         </p>
         <p>
           <b>
