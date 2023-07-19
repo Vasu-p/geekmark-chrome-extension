@@ -223,7 +223,7 @@ export function HelpModal({ show, onClose }) {
           .
         </p>
         <p>
-          Similarly, typing <kbd>repo ui</kbd> will open
+          Similarly, typing <kbd>repo ui</kbd> will open(' ')
           <a href="#" className="link-primary">
             https://github.com/SAP/ui5-webcomponents
           </a>
