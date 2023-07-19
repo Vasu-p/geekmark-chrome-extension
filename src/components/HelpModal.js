@@ -210,7 +210,8 @@ export function HelpModal({ show, onClose }) {
         />
         <p>
           In above example we define rule's command to fuzzy search over one of
-          the attributes of the dataset(<code>repo</code> in our case). The
+          the attributes of the dataset(
+          <code style={{ display: 'inline' }}>repo</code> in above case). The
           rule's URL can use any of the attributes of the dataset one or more
           times.
         </p>
