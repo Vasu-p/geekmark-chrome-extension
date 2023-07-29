@@ -64,10 +64,12 @@ export function getMatchingDataset(datasets, rule) {
 
 function generateRuleRegex(str) {
   const found = str.match(paramRegex);
+  if (!found) return undefined;
+  const regexString = found.reduce((acc, foundParam) => {
+    return acc.replace(foundParam, `[a-zA-Z-0-9]+`);
+  }, str);
 
-  return found
-    ? new RegExp(str.replace(found[0], '[a-zA-Z-0-9]+'), 'g')
-    : undefined;
+  return new RegExp(regexString, 'g');
 }
 
 function getCommandParam(command) {
