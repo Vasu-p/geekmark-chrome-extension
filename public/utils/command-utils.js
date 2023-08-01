@@ -96,7 +96,7 @@ export function generateUrlForAdvancedRuleWithNestedParam(
   const commandParamValue = typedCommand.substr(commandParamPosition).trim(); // "name" value to fuzzy search for in dataset
   // e.g. rule url with more than 1 params = "https://github.com/repos/{{repo.owner}}/{{repo.name}}/issues"
 
-  const foundDataset = get_closest_match(
+  const foundDatasetRecord = get_closest_match(
     commandParamValue,
     dataset.values,
     (record) => record[commandParamAccessor]
@@ -108,7 +108,7 @@ export function generateUrlForAdvancedRuleWithNestedParam(
   const url = urlParams.reduce((acc, param) => {
     const paramWithoutBraces = param.replace(bracesRegex, ''); // 'repo.owner'
     const paramAccessor = paramWithoutBraces.split('.')[1]; // 'owner'
-    const paramValue = foundDataset[paramAccessor]; // 'def'
+    const paramValue = foundDatasetRecord[paramAccessor]; // 'def'
     return acc.replace(param, paramValue);
   }, rule.url);
 
