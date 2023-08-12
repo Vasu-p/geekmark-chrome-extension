@@ -3,9 +3,10 @@
 import { RuleType } from './constants.js';
 import {
   matches,
-  generateUrlForSimpleRule,
-  generateUrlForAdvancedRule,
-  getMatchingDataset,
+  parseSimpleParams,
+  substituteParamsInSimpleRule,
+  parseAdvancedParams,
+  substituteParamsInAdvancedRule,
 } from './utils/command-utils.js';
 
 chrome.omnibox.onInputEntered.addListener(async (typedCommand) => {
@@ -21,11 +22,16 @@ chrome.omnibox.onInputEntered.addListener(async (typedCommand) => {
     }
     if (matches(typedCommand, rule.command)) {
       if (rule.type === RuleType.SIMPLE) {
-        newURL = generateUrlForSimpleRule(typedCommand, rule);
+        const parsedParamsMap = parseSimpleParams(typedCommand, rule.command);
+        newURL = substituteParamsInSimpleRule(rule.url, parsedParamsMap);
       }
       if (rule.type === RuleType.ADVANCED) {
-        const dataset = getMatchingDataset(datasets, rule);
-        newURL = generateUrlForAdvancedRule(typedCommand, rule, dataset);
+        const parsedParamsMap = parseAdvancedParams(
+          typedCommand,
+          rule.command,
+          datasets
+        );
+        newURL = substituteParamsInAdvancedRule(rule.url, parsedParamsMap);
       }
       return false;
     }
