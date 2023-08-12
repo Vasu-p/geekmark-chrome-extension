@@ -73,7 +73,7 @@ export function substituteParamsInAdvancedRule(ruleUrl, parsedParamsMap) {
       parsedParamsMap[enrichedURLParam.paramWithoutBraces];
     return acc.replace(
       param,
-      getEffectiveParamSubstituteValue(parsedCommandParam)
+      getEffectiveParamSubstituteValue(parsedCommandParam, enrichedURLParam)
     );
   }, ruleUrl);
 }
@@ -109,13 +109,16 @@ function getEffectiveParamValue(typedParamValue, enrichedParam, datasets) {
   );
 }
 
-function getEffectiveParamSubstituteValue(parsedCommandParam) {
+function getEffectiveParamSubstituteValue(
+  parsedCommandParam,
+  enrichedURLParam
+) {
   if (parsedCommandParam.type === 'simple')
     return parsedCommandParam.substituteValue;
   if (typeof parsedCommandParam.substituteValue === 'string')
     return parsedCommandParam.substituteValue;
 
-  return parsedCommandParam.substituteValue[parsedCommandParam.param.accessor];
+  return parsedCommandParam.substituteValue[enrichedURLParam.param.accessor];
 }
 
 function enrichParam(param) {
@@ -138,7 +141,7 @@ function generateRuleRegex(str) {
   if (!found) return undefined;
   const regexString = found.reduce((acc, foundParam) => {
     return acc.replace(foundParam, `[a-zA-Z-0-9]+`);
-  }, str);
+  }, `^${str}$`);
 
   return new RegExp(regexString, 'g');
 }
