@@ -11,55 +11,126 @@ export function matches(typedCommand, ruleCommand) {
   return ruleRegex.test(typedCommand);
 }
 
-export function generateUrlForSimpleRule(typedCommand, rule) {
-  // typedCommand "abcxyz def"
-  const command = rule.command; // "abcxyz {param}"
-  const url = rule.url; // "replacement {param}""
-  const param = rule.command.match(paramRegex)[0];
+export function parseSimpleParams(typedCommand, ruleCommand) {
+  const parsedParams = {};
+  const params = ruleCommand.match(paramRegex);
+  if (!params) return parsedParams;
 
-  // find position of param in command
-  const commandParamPosition = command.indexOf(param);
-  // find string at above position in typedCommand
-  const paramValue = typedCommand.substr(commandParamPosition);
-  console.log(command, url, param, paramValue);
-  // replace url param with found string
-  return url.replace(param, paramValue);
+  // split by space and ignore first element
+  const typedParamValues = typedCommand.split(' ').slice(1);
+
+  params.forEach((param, index) => {
+    const typedParamValue = typedParamValues[index];
+    parsedParams[param] = {
+      param: param,
+      type: 'simple',
+      substituteValue: typedParamValue,
+    };
+  });
+
+  return parsedParams;
 }
 
-export function generateUrlForAdvancedRule(typedCommand, rule, dataset) {
-  // rule { command: '', url: '', type: 'advanced', dataset: 'repositories'(e.g.) }
-  // in every rule there is only 1 param allowed
-  // in advance rule that parameter is associated with a dataset object
-  // advance rule doesnt substitute the user typed param directly in rule url (as simple rule does)
-  // in advance rule, we find the closest string in dataset which matches the user typed param and substitute that
+export function parseAdvancedParams(typedCommand, ruleCommand, datasets) {
+  const parsedParams = {};
+  const params = ruleCommand.match(paramRegex);
+  if (!params) return parsedParams;
 
-  const command = rule.command;
-  const commandParam = getCommandParam(command); // "{{param}}"
+  const typedParamValues = typedCommand.split(' ').slice(1);
 
-  if (commandParam.includes('.')) {
-    return generateUrlForAdvancedRuleWithNestedParam(
-      typedCommand,
-      rule,
-      dataset
+  params.forEach((param, index) => {
+    const typedParamValue = typedParamValues[index];
+    const enrichedParam = enrichParam(param);
+    parsedParams[enrichedParam.paramWithoutBraces] = {
+      param: enrichedParam,
+      type: 'advanced',
+      substituteValue: getEffectiveParamValue(
+        typedParamValue,
+        enrichedParam,
+        datasets
+      ),
+    };
+  });
+
+  return parsedParams;
+}
+
+export function substituteParamsInSimpleRule(ruleUrl, parsedParamsMap) {
+  const params = ruleUrl.match(paramRegex);
+  if (!params) return ruleUrl;
+  return ruleUrl.reduce((acc, param) => {
+    const parsedParam = parsedParamsMap[param];
+    return acc.replace(param, parsedParam.substituteValue);
+  });
+}
+
+export function substituteParamsInAdvancedRule(ruleUrl, parsedParamsMap) {
+  const params = ruleUrl.match(paramRegex);
+  if (!params) return ruleUrl;
+  return ruleUrl.reduce((acc, param) => {
+    const enrichedURLParam = enrichParam(param);
+    const parsedCommandParam =
+      parsedParamsMap[enrichedURLParam.paramWithoutBraces];
+    return acc.replace(
+      param,
+      getEffectiveParamSubstituteValue(parsedCommandParam)
     );
-  } else {
-    return generateUrlForAdvancedRuleWithSimpleParam(
-      typedCommand,
-      rule,
-      dataset
+  });
+}
+
+function getEffectiveParamValue(typedParamValue, enrichedParam, datasets) {
+  const foundDataset = datasets.find(
+    (dataset) => dataset.shortName === enrichedParam.paramWithoutBraces
+  );
+  // simple param
+  if (!foundDataset) return typedParamValue;
+  // dataset param for list of string dataset
+  if (typeof foundDataset.values[0] === 'string') {
+    return get_closest_match(
+      typedParamValue,
+      foundDataset.values,
+      (record) => record
     );
   }
+  // backward compatibility for dataset param with .name objects
+
+  if (!enrichedParam.isNestedParam && foundDataset.values[0].name) {
+    return get_closest_match(
+      typedParamValue,
+      foundDataset.values,
+      (record) => record.name
+    ).name;
+  }
+  // dataset param with nested param
+  return get_closest_match(
+    typedParamValue,
+    foundDataset.values,
+    (record) => record[enrichedParam.accessor]
+  );
 }
 
-export function getMatchingDataset(datasets, rule) {
-  const commandParam = rule.command.match(paramRegex)[0];
-  const commandParamWithoutBraces = commandParam.replace(bracesRegex, '');
+function getEffectiveParamSubstituteValue(parsedCommandParam) {
+  if (parsedCommandParam.type === 'simple')
+    return parsedCommandParam.substituteValue;
+  if (typeof parsedCommandParam.substituteValue === 'string')
+    return parsedCommandParam.substituteValue;
 
-  const datasetFromRule = isRuleWithNestedParam(rule)
-    ? commandParamWithoutBraces.split('.')[0]
-    : commandParamWithoutBraces;
+  return parsedCommandParam.substituteValue[parsedCommandParam.param.accessor];
+}
 
-  return datasets.filter((dataset) => dataset.shortName === datasetFromRule)[0];
+function enrichParam(param) {
+  const paramWithoutBraces = param.replace(bracesRegex, '');
+  const isNestedParam = paramWithoutBraces.includes('.');
+  const accessor = isNestedParam ? paramWithoutBraces.split('.')[1] : undefined;
+
+  return {
+    param,
+    paramWithoutBraces: isNestedParam
+      ? paramWithoutBraces.split('.')[0]
+      : paramWithoutBraces,
+    accessor: accessor,
+    isNestedParam: isNestedParam,
+  };
 }
 
 function generateRuleRegex(str) {
@@ -70,67 +141,4 @@ function generateRuleRegex(str) {
   }, str);
 
   return new RegExp(regexString, 'g');
-}
-
-function getCommandParam(command) {
-  const found = command.match(paramRegex);
-  return found ? found[0] : undefined;
-}
-
-function isRuleWithNestedParam(rule) {
-  const commandParam = getCommandParam(rule.command);
-  return commandParam.includes('.');
-}
-
-export function generateUrlForAdvancedRuleWithNestedParam(
-  typedCommand,
-  rule,
-  dataset
-) {
-  const commandParam = getCommandParam(rule.command); // {{repo.name}}
-  const commandParamWithoutBraces = commandParam.replace(bracesRegex, ''); // repo.name
-  const commandParamAccessor = commandParamWithoutBraces.split('.')[1]; // 'name'
-  // find position of param in command
-  const commandParamPosition = rule.command.indexOf(commandParam); // index of {{repo.name}} in command
-  // find string at above position in typedCommand
-  const commandParamValue = typedCommand.substr(commandParamPosition).trim(); // "name" value to fuzzy search for in dataset
-  // e.g. rule url with more than 1 params = "https://github.com/repos/{{repo.owner}}/{{repo.name}}/issues"
-
-  const foundDatasetRecord = get_closest_match(
-    commandParamValue,
-    dataset.values,
-    (record) => record[commandParamAccessor]
-  ); // { name: 'abc', owner: 'def' }
-
-  // find all params in rule url
-  const urlParams = rule.url.match(paramRegex); // ['{{repo.owner}}', '{{repo.name}}']
-  // replace all params in rule url with fuzzy searched values
-  const url = urlParams.reduce((acc, param) => {
-    const paramWithoutBraces = param.replace(bracesRegex, ''); // 'repo.owner'
-    const paramAccessor = paramWithoutBraces.split('.')[1]; // 'owner'
-    const paramValue = foundDatasetRecord[paramAccessor]; // 'def'
-    return acc.replace(param, paramValue);
-  }, rule.url);
-
-  return url;
-}
-
-function generateUrlForAdvancedRuleWithSimpleParam(
-  typedCommand, // typedCommand "abcxyz def"
-  rule,
-  dataset // { values: ['abc', 'def', 'ghi'], shortName: 'repo', name: 'repositories' }
-) {
-  const param = getCommandParam(rule.command);
-  // find position of param in command
-  const commandParamPosition = rule.command.indexOf(param);
-  // find string at above position in typedCommand
-  const paramValue = typedCommand.substr(commandParamPosition).trim();
-  // replace url param with found string
-  const toReplaceValueFromDataset =
-    typeof dataset.values[0] === 'string'
-      ? get_closest_match(paramValue, dataset.values, (record) => record)
-      : get_closest_match(paramValue, dataset.values, (record) => record.name)
-          .name;
-
-  return rule.url.replace(paramRegex, toReplaceValueFromDataset);
 }
