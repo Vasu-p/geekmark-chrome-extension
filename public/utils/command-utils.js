@@ -58,16 +58,16 @@ export function parseAdvancedParams(typedCommand, ruleCommand, datasets) {
 export function substituteParamsInSimpleRule(ruleUrl, parsedParamsMap) {
   const params = ruleUrl.match(paramRegex);
   if (!params) return ruleUrl;
-  return ruleUrl.reduce((acc, param) => {
+  return params.reduce((acc, param) => {
     const parsedParam = parsedParamsMap[param];
     return acc.replace(param, parsedParam.substituteValue);
-  });
+  }, ruleUrl);
 }
 
 export function substituteParamsInAdvancedRule(ruleUrl, parsedParamsMap) {
   const params = ruleUrl.match(paramRegex);
   if (!params) return ruleUrl;
-  return ruleUrl.reduce((acc, param) => {
+  return params.reduce((acc, param) => {
     const enrichedURLParam = enrichParam(param);
     const parsedCommandParam =
       parsedParamsMap[enrichedURLParam.paramWithoutBraces];
@@ -75,7 +75,7 @@ export function substituteParamsInAdvancedRule(ruleUrl, parsedParamsMap) {
       param,
       getEffectiveParamSubstituteValue(parsedCommandParam)
     );
-  });
+  }, ruleUrl);
 }
 
 function getEffectiveParamValue(typedParamValue, enrichedParam, datasets) {
