@@ -118,7 +118,7 @@ function getEffectiveParamSubstituteValue(
   if (typeof parsedCommandParam.substituteValue === 'string')
     return parsedCommandParam.substituteValue;
 
-  return parsedCommandParam.substituteValue[enrichedURLParam.param.accessor];
+  return parsedCommandParam.substituteValue[enrichedURLParam.accessor];
 }
 
 function enrichParam(param) {
