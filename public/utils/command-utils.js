@@ -1,4 +1,5 @@
 import { get_closest_match } from './string-utils.js';
+import { RuleType } from '../constants.js';
 
 export const paramRegex = /{{(.*?)}}/g;
 export const bracesRegex = /{{|}}/g;
@@ -11,7 +12,23 @@ export function matches(typedCommand, ruleCommand) {
   return ruleRegex.test(typedCommand);
 }
 
-export function parseSimpleParams(typedCommand, ruleCommand) {
+export function generateURL(typedCommand, rule, datasets) {
+  if (rule.type === RuleType.SIMPLE) {
+    const parsedParamsMap = parseSimpleParams(typedCommand, rule.command);
+    return substituteParamsInSimpleRule(rule.url, parsedParamsMap);
+  }
+  if (rule.type === RuleType.ADVANCED) {
+    const parsedParamsMap = parseAdvancedParams(
+      typedCommand,
+      rule.command,
+      datasets
+    );
+    return substituteParamsInAdvancedRule(rule.url, parsedParamsMap);
+  }
+  return `https://www.google.com`;
+}
+
+function parseSimpleParams(typedCommand, ruleCommand) {
   const parsedParams = {};
   const params = ruleCommand.match(paramRegex);
   if (!params) return parsedParams;
@@ -31,7 +48,7 @@ export function parseSimpleParams(typedCommand, ruleCommand) {
   return parsedParams;
 }
 
-export function parseAdvancedParams(typedCommand, ruleCommand, datasets) {
+function parseAdvancedParams(typedCommand, ruleCommand, datasets) {
   const parsedParams = {};
   const params = ruleCommand.match(paramRegex);
   if (!params) return parsedParams;
@@ -55,7 +72,7 @@ export function parseAdvancedParams(typedCommand, ruleCommand, datasets) {
   return parsedParams;
 }
 
-export function substituteParamsInSimpleRule(ruleUrl, parsedParamsMap) {
+function substituteParamsInSimpleRule(ruleUrl, parsedParamsMap) {
   const params = ruleUrl.match(paramRegex);
   if (!params) return ruleUrl;
   return params.reduce((acc, param) => {
@@ -64,7 +81,7 @@ export function substituteParamsInSimpleRule(ruleUrl, parsedParamsMap) {
   }, ruleUrl);
 }
 
-export function substituteParamsInAdvancedRule(ruleUrl, parsedParamsMap) {
+function substituteParamsInAdvancedRule(ruleUrl, parsedParamsMap) {
   const params = ruleUrl.match(paramRegex);
   if (!params) return ruleUrl;
   return params.reduce((acc, param) => {
