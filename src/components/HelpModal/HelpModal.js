@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal } from 'react-bootstrap';
-import { CodeBlock } from '../common/CodeBlock';
+import { CodeBlock } from '../../common/CodeBlock';
+import { RuleFormatWithExamples } from './RuleFormatWithExamples';
 
 export function HelpModal({ show, onClose }) {
   return (
@@ -42,22 +43,16 @@ export function HelpModal({ show, onClose }) {
           When the user types the command, the extension will open the specified
           URL.
         </p>
-        <CodeBlock
-          title={'Rule Format'}
-          body={'Rule Command:: [command]\nRule URL:: [URL]'}
+        <RuleFormatWithExamples
+          exampleRules={[
+            { command: 'g', url: 'https://www.google.com' },
+            { command: 'b', url: 'https://www.bing.com' },
+          ]}
+          exampleInteractions={[
+            { command: 'g', url: 'https://www.google.com' },
+            { command: 'b', url: 'https://www.bing.com' },
+          ]}
         />
-        <CodeBlock
-          title={'Example #1'}
-          body={'Rule Command:: g\nRule URL:: https://www.google.com'}
-        />
-        <p>
-          In this example, when the user types <kbd>g</kbd> in the address bar
-          and presses Enter, the extension will open{' '}
-          <a href="#" className="link-primary">
-            https://www.google.com
-          </a>
-          .
-        </p>
         <h4>Rules with Parameters</h4>
         <p>
           Rules with parameters allow users to specify dynamic parts in the URL.
