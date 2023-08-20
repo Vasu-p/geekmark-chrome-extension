@@ -57,38 +57,33 @@ export function HelpModal({ show, onClose }) {
         <p>
           Rules with parameters allow users to specify dynamic parts in the URL.
           The parameter acts as a placeholder that can be replaced with specific
-          values when using the command. The parameter must be the last part of
-          the command and can be placed anywhere in the URL.
+          values when using the command.
         </p>
-        <CodeBlock
-          title={'Rule Format'}
-          body={
-            'Rule Command:: [command] {{param}}\nRule URL::[URL with {{param}} placeholder]'
-          }
-        />
-        <CodeBlock
-          title={'Example #1'}
-          body={
-            'Rule Command:: mail {{param}}\nRule URL:: https://mail.google.com/mail/u/0/#{{param}}'
-          }
-        />
-        <p>
-          In this example, the user can type <kbd>mail inbox</kbd> in the
-          address bar, and the extension will open{' '}
-          <a href="#" className="link-primary">
-            https://mail.google.com/mail/u/0/#inbox
-          </a>
-          . Similarly, typing <kbd>mail sent</kbd> will open{' '}
-          <a href="#" className="link-primary">
-            https://mail.google.com/mail/u/0/#sent
-          </a>
-          .
-        </p>
-        <CodeBlock
-          title={'Example #2'}
-          body={
-            'Rule Command:: laxto {{airport}}\nRule URL:: https://www.skyscanner.com/transport/flights/lax/{{airport}}?oym=2307&selectedoday=01&iym=2307&selectediday=01'
-          }
+        <RuleFormatWithExamples
+          exampleRules={[
+            {
+              command: 'mail {{param}}',
+              url: 'https://mail.google.com/mail/u/0/#{{param}}',
+            },
+            {
+              command: 'laxto {{airport}}',
+              url: 'https://www.skyscanner.com/transport/flights/lax/{{airport}}?oym=2307&selectedoday=01&iym=2307&selectediday=01',
+            },
+          ]}
+          exampleInteractions={[
+            {
+              command: 'mail inbox',
+              url: 'https://mail.google.com/mail/u/0/#inbox',
+            },
+            {
+              command: 'mail sent',
+              url: 'https://mail.google.com/mail/u/0/#sent',
+            },
+            {
+              command: 'laxto bna',
+              url: 'https://www.skyscanner.com/transport/flights/lax/bna?oym=2307&selectedoday=01&iym=2307&selectediday=01',
+            },
+          ]}
         />
         <h4>Rules with Smart Parameters</h4>
         <p>
@@ -122,44 +117,11 @@ export function HelpModal({ show, onClose }) {
           </li>
         </ol>
         <CodeBlock
-          title={'Rule Format 1'}
-          body={
-            'Rule Command:: [command] {{datasetshortname}}\nRule URL::[URL with {{datasetshortname}} placeholder]'
-          }
-        />
-        <CodeBlock
-          title={'Rule Format 2'}
-          body={
-            'Rule Command:: [command] {{datasetshortname.propertyX}}\nRule URL::[URL with {{datasetshortname.property1}}..{{datasetshortname.propertyN}} placeholder]'
-          }
-        />
-        <CodeBlock
           title={'Mailbox dataset'}
           body={
             'Name:: mailboxes\nShort Name:: mailbox\nDataset:: ["inbox","sent","starred","imp","drafts"]'
           }
         />
-        <CodeBlock
-          title={'Example #1'}
-          body={
-            'Rule Command:: mail {{mailbox}}\nRule URL:: https://mail.google.com/mail/u/0/#{{mailbox}}'
-          }
-        />
-        <p>
-          Without smart parameters, you'd have to type <kbd>mail inbox</kbd> to
-          go to your inbox. With smart parameters, you can type{' '}
-          <kbd>mail ib</kbd> or <kbd>mail in</kbd> or <kbd>mail bo</kbd> in the
-          address bar, and the extension will open{' '}
-          <a href="#" className="link-primary">
-            https://mail.google.com/mail/u/0/#inbox
-          </a>
-          . Similarly, typing <kbd>mail se</kbd> or <kbd>mail sn</kbd> or{' '}
-          <kbd>mail st</kbd> or <kbd>mail nt</kbd> will open{' '}
-          <a href="#" className="link-primary">
-            https://mail.google.com/mail/u/0/#sent
-          </a>
-          .
-        </p>
         <CodeBlock
           title={'Github Repositories dataset'}
           body={
@@ -197,32 +159,56 @@ export function HelpModal({ show, onClose }) {
             </>
           }
         />
-        <CodeBlock
-          title={'Example #2'}
-          body={
-            'Rule Command:: repo {{repo.repo}}\nRule URL:: https://github.com/{{repo.org}}/{{repo.repo}}'
-          }
+        <RuleFormatWithExamples
+          exampleRules={[
+            {
+              command: 'mail {{mailbox}}',
+              url: 'https://mail.google.com/mail/u/0/#{{mailbox}}',
+            },
+            {
+              command: 'repo {{repo.repo}}',
+              url: 'https://github.com/{{repo.org}}/{{repo.repo}}',
+            },
+          ]}
+          exampleInteractions={[
+            {
+              command: 'mail ib',
+              url: 'https://mail.google.com/mail/u/0/#inbox',
+            },
+            {
+              command: 'mail in',
+              url: 'https://mail.google.com/mail/u/0/#inbox',
+            },
+            {
+              command: 'mail st',
+              url: 'https://mail.google.com/mail/u/0/#sent',
+            },
+            {
+              command: 'repo rena',
+              url: 'https://github.com/facebooi/react-native',
+            },
+            {
+              command: 'repo ui',
+              url: 'https://github.com/SAP/ui5-webcomponents',
+            },
+          ]}
         />
         <p>
-          In above example we define rule's command to fuzzy search over one of
-          the attributes of the dataset(
+          Without smart parameters, you'd have to type <kbd>mail inbox</kbd> to
+          go to your inbox. With smart parameters, you can type{' '}
+          <kbd>mail ib</kbd> or <kbd>mail in</kbd> or <kbd>mail bo</kbd> in the
+          address bar, and the extension will open{' '}
+          <a href="#" className="link-primary">
+            https://mail.google.com/mail/u/0/#inbox
+          </a>
+          .
+        </p>
+        <p>
+          As we did for the second rule, we can also define rule's command to
+          fuzzy search over one of the attributes of the dataset(
           <code style={{ display: 'inline' }}>repo</code> in above case). The
           rule's URL can use any of the attributes of the dataset one or more
           times.
-        </p>
-        <p>
-          If you type <kbd>repo rena</kbd> the extension will open{' '}
-          <a href="#" className="link-primary">
-            https://github.com/facebook/react-native
-          </a>
-          .
-        </p>
-        <p>
-          Similarly, typing <kbd>repo ui</kbd> will open{' '}
-          <a href="#" className="link-primary">
-            https://github.com/SAP/ui5-webcomponents
-          </a>
-          .
         </p>
         <p>
           <b>

@@ -4,7 +4,10 @@ import { URLInput } from '../URLInput';
 // exampleRules is an array of objects with the following properties:
 //   - command
 //   - url
-export function RuleFormatWithExamples({ exampleRules, exampleInteractions }) {
+export function RuleFormatWithExamples({
+  exampleRules = [],
+  exampleInteractions = [],
+}) {
   return (
     <Card style={{ marginBottom: '1rem' }}>
       <Card.Body>
