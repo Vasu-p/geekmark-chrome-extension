@@ -241,13 +241,6 @@ export function HelpModal({ show, onClose }) {
             'Original Word:: someword\nTyped Shorthand:: sw (Match)\nTyped Shorthand:: smo (Match)\nTyped Shorthand:: ws (No Match)\nTyped Shorthand:: swm (No Match)'
           }
         />
-        <h4>Limitations</h4>
-        <ul>
-          <li>Only one dataset can be used per rule</li>
-          <li>Only one parameter can be used in rule's command</li>
-          <li>The parameter must be the last part of the command</li>
-          <li>The parameter can be placed anywhere in the URL</li>
-        </ul>
       </Modal.Body>
     </Modal>
   );
