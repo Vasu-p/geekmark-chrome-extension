@@ -75,7 +75,7 @@ export function DatasetsTab({ onDatasetsSave }) {
               overflow: 'auto',
             }}
             name={null}
-            enableClipboard={false}
+            enableClipboard={true}
             displayDataTypes={false}
           />
         </Modal.Body>
