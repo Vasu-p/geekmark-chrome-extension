@@ -222,6 +222,41 @@ export function HelpModal({ show, onClose }) {
             'Original Word:: someword\nTyped Shorthand:: sw (Match)\nTyped Shorthand:: smo (Match)\nTyped Shorthand:: ws (No Match)\nTyped Shorthand:: swm (No Match)'
           }
         />
+        <h4>Complex Rule Examples</h4>
+        <RuleFormatWithExamples
+          exampleRules={[
+            {
+              command: 'site {{new1.x}} {{new2.x}}',
+              url: 'https://www.{{new1.x}}.com/{{new1.x}}-{{new1.y}}-{{new2.x}}-{{new2.y}}',
+            },
+            {
+              command: 'flight {{air1}} {{air2}} {{from}} {{to}}',
+              url: 'https://www.google.com/travel/flights?q=Flights%20to%20{{air2}}%20from%20{{air1}}%20on%20{{from}}%20through%20{{to}}',
+            },
+            {
+              command: 'repo {{repo.repo}} {{section}}',
+              url: 'https://github.com/{{repo.org}}/{{repo.repo}}/{{section}}',
+            },
+            {},
+          ]}
+          exampleInteractions={[
+            {
+              command: 'site ab cd',
+              url: 'https://www.ab.com/ab-cd-ab-cd',
+            },
+            {
+              command: 'flight lax yyz 2023-01-01 2023-02-02',
+              url: 'https://www.google.com/travel/flights?q=Flights%20to%20yyz%20from%20lax%20on%202023-01-01%20through%202023-02-02',
+            },
+            {
+              command: 'repo rena issues',
+              url: 'https://github.com/facebook/react-native/issues',
+            },
+          ]}
+        />
+        Depending on how you structure your rules, you can create some pretty
+        powerful commands. Please share your cool commands with us on Github or
+        by putting a review on Chrome Web Store.
       </Modal.Body>
     </Modal>
   );
