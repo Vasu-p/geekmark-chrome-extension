@@ -1,13 +1,6 @@
 /*global chrome*/
 // remember: import using file.js and not just file. otherwise it will thorw error.
-import { RuleType } from './constants.js';
-import {
-  matches,
-  parseSimpleParams,
-  substituteParamsInSimpleRule,
-  parseAdvancedParams,
-  substituteParamsInAdvancedRule,
-} from './utils/command-utils.js';
+import { matches, generateURL } from './utils/command-utils.js';
 
 chrome.omnibox.onInputEntered.addListener(async (typedCommand) => {
   let newURL = null;
@@ -21,18 +14,7 @@ chrome.omnibox.onInputEntered.addListener(async (typedCommand) => {
       return false;
     }
     if (matches(typedCommand, rule.command)) {
-      if (rule.type === RuleType.SIMPLE) {
-        const parsedParamsMap = parseSimpleParams(typedCommand, rule.command);
-        newURL = substituteParamsInSimpleRule(rule.url, parsedParamsMap);
-      }
-      if (rule.type === RuleType.ADVANCED) {
-        const parsedParamsMap = parseAdvancedParams(
-          typedCommand,
-          rule.command,
-          datasets
-        );
-        newURL = substituteParamsInAdvancedRule(rule.url, parsedParamsMap);
-      }
+      newURL = generateURL(typedCommand, rule, datasets);
       return false;
     }
     return true;
