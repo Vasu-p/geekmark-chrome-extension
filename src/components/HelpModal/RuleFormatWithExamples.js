@@ -15,7 +15,12 @@ export function RuleFormatWithExamples({
           <Card.Title as={'h5'}>Example Rules</Card.Title>
           <hr />
           {exampleRules.map((rule, index) => (
-            <URLInput key={index} label={rule.command} value={rule.url} />
+            <URLInput
+              key={index}
+              label={rule.command}
+              value={rule.url}
+              className={'mt-2'}
+            />
           ))}
           <Card.Title className="mt-4" as={'h5'}>
             Example Interactions
