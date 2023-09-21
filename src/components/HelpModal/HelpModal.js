@@ -237,7 +237,6 @@ export function HelpModal({ show, onClose }) {
               command: 'repo {{repo.repo}} {{section}}',
               url: 'https://github.com/{{repo.org}}/{{repo.repo}}/{{section}}',
             },
-            {},
           ]}
           exampleInteractions={[
             {
