@@ -9,8 +9,9 @@ import {
   ToastContainer,
   Tabs,
   Tab,
+  Dropdown,
 } from 'react-bootstrap';
-import { QuestionCircle } from 'react-bootstrap-icons';
+import { QuestionCircle, List } from 'react-bootstrap-icons';
 
 // custom compos
 import { useShowToast } from './utils/hooks/useShowToast';
@@ -35,10 +36,18 @@ function App() {
           </Navbar.Brand>
           <QuestionCircle
             className="ms-auto App-icon"
-            size={28}
+            size={24}
             onClick={() => setShowHelpModal(true)}
             style={{ cursor: 'pointer' }}
           />
+          <Dropdown>
+            <Dropdown.Toggle variant="light" id="dropdown-basic">
+              <List size={24} />
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+              <Dropdown.Item>Import</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
         </Container>
       </Navbar>
       <Tabs className="mt-1">
