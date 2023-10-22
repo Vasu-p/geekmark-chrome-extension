@@ -18,6 +18,7 @@ import { useShowToast } from './utils/hooks/useShowToast';
 import { RulesTab } from './components/RulesTab';
 import { DatasetsTab } from './components/DatasetsTab';
 import { HelpModal } from './components/HelpModal';
+import { AppOptions } from './components/AppOptions';
 
 function App() {
   const {
@@ -40,14 +41,7 @@ function App() {
             onClick={() => setShowHelpModal(true)}
             style={{ cursor: 'pointer' }}
           />
-          <Dropdown>
-            <Dropdown.Toggle variant="light" id="dropdown-basic">
-              <List size={24} />
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-              <Dropdown.Item>Import</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
+          <AppOptions />
         </Container>
       </Navbar>
       <Tabs className="mt-1">
