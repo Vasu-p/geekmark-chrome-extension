@@ -9,9 +9,8 @@ import {
   ToastContainer,
   Tabs,
   Tab,
-  Dropdown,
 } from 'react-bootstrap';
-import { QuestionCircle, List } from 'react-bootstrap-icons';
+import { QuestionCircle } from 'react-bootstrap-icons';
 
 // custom compos
 import { useShowToast } from './utils/hooks/useShowToast';

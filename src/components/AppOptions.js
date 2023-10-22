@@ -1,14 +1,12 @@
+/*global chrome*/
 import { useCallback, useRef } from 'react';
-import { Dropdown, ToastContainer, Toast } from 'react-bootstrap';
+import { Dropdown } from 'react-bootstrap';
 import { List } from 'react-bootstrap-icons';
-import { useLocalStorage } from '../utils/hooks/useLocalStorage';
-import { useShowToast } from '../utils/hooks/useShowToast';
+import { useChromeStorageLocal } from 'use-chrome-storage';
 
 export const AppOptions = () => {
   const importFileRef = useRef(null);
-  const { setData: setRules } = useLocalStorage('rules', 'array');
-  const { show: isShowSuccessToast, showToast: showSuccessToast } =
-    useShowToast();
+  const [value, setValue] = useChromeStorageLocal('rules');
 
   const handleImportFileUpload = useCallback(() => {
     importFileRef.current?.click();
@@ -24,12 +22,12 @@ export const AppOptions = () => {
         const importedRules = importContents
           .filter((content) => content.type === 'rule')
           .map((rule) => rule.data);
-        setRules(importedRules);
-        showSuccessToast();
+        setValue([...value, ...importedRules]);
+        chrome.tabs.reload();
       };
       reader.readAsText(file);
     }
-  }, [setRules, showSuccessToast]);
+  }, [value, setValue]);
 
   return (
     <>
@@ -47,11 +45,6 @@ export const AppOptions = () => {
           <Dropdown.Item onClick={handleImportFileUpload}>Import</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
-      <ToastContainer position="bottom-center" className="mb-3">
-        <Toast show={isShowSuccessToast}>
-          <Toast.Body>Operation Succesful</Toast.Body>
-        </Toast>
-      </ToastContainer>
     </>
   );
 };
