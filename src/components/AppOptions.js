@@ -6,7 +6,8 @@ import { useChromeStorageLocal } from 'use-chrome-storage';
 
 export const AppOptions = () => {
   const importFileRef = useRef(null);
-  const [value, setValue] = useChromeStorageLocal('rules');
+  const [rules, setRules] = useChromeStorageLocal('rules');
+  const [datasets, setDatasets] = useChromeStorageLocal('datasets');
 
   const handleImportFileUpload = useCallback(() => {
     importFileRef.current?.click();
@@ -22,12 +23,16 @@ export const AppOptions = () => {
         const importedRules = importContents
           .filter((content) => content.type === 'rule')
           .map((rule) => rule.data);
-        setValue([...value, ...importedRules]);
+        const importedDatasets = importContents
+          .filter((content) => content.type === 'dataset')
+          .map((dataset) => dataset.data);
+        setRules([...rules, ...importedRules]);
+        setDatasets([...datasets, ...importedDatasets]);
         chrome.tabs.reload();
       };
       reader.readAsText(file);
     }
-  }, [value, setValue]);
+  }, [rules, datasets, setRules, setDatasets]);
 
   return (
     <>
