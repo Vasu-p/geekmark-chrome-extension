@@ -17,3 +17,8 @@ code {
   display: block;
   white-space: pre-wrap;
 }
+
+/* To hide react bootstrap dropdown arrow */
+.dropdown-toggle::after {
+  display: none !important;
+}

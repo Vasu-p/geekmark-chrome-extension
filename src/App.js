@@ -17,6 +17,7 @@ import { useShowToast } from './utils/hooks/useShowToast';
 import { RulesTab } from './components/RulesTab';
 import { DatasetsTab } from './components/DatasetsTab';
 import { HelpModal } from './components/HelpModal';
+import { AppOptions } from './components/AppOptions';
 
 function App() {
   const {
@@ -35,10 +36,11 @@ function App() {
           </Navbar.Brand>
           <QuestionCircle
             className="ms-auto App-icon"
-            size={28}
+            size={24}
             onClick={() => setShowHelpModal(true)}
             style={{ cursor: 'pointer' }}
           />
+          <AppOptions />
         </Container>
       </Navbar>
       <Tabs className="mt-1">
