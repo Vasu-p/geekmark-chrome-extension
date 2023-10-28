@@ -34,6 +34,21 @@ export const AppOptions = () => {
     }
   }, [rules, datasets, setRules, setDatasets]);
 
+  const handleExport = useCallback(() => {
+    const exportContents = [
+      ...rules.map((rule) => ({ type: 'rule', data: rule })),
+      ...datasets.map((dataset) => ({ type: 'dataset', data: dataset })),
+    ];
+    const exportContentsBlob = new Blob([JSON.stringify(exportContents)], {
+      type: 'application/json',
+    });
+    const exportContentsUrl = URL.createObjectURL(exportContentsBlob);
+    chrome.downloads.download({
+      url: exportContentsUrl,
+      filename: 'geekmark_export.json',
+    });
+  }, [rules, datasets]);
+
   return (
     <>
       <input
@@ -48,6 +63,7 @@ export const AppOptions = () => {
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <Dropdown.Item onClick={handleImportFileUpload}>Import</Dropdown.Item>
+          <Dropdown.Item onClick={handleExport}>Export</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
     </>
