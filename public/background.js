@@ -5,8 +5,10 @@ import { matches, generateURL } from './utils/command-utils.js';
 chrome.omnibox.onInputEntered.addListener(async (typedCommand) => {
   let newURL = null;
 
-  const { rules } = await chrome.storage.local.get(['rules']);
-  const { datasets } = await chrome.storage.local.get(['datasets']);
+  let { rules } = await chrome.storage.local.get(['rules']);
+  let { datasets } = await chrome.storage.local.get(['datasets']);
+  rules = rules || [];
+  datasets = datasets || [];
 
   rules.every((rule) => {
     if (rule.command === typedCommand) {
