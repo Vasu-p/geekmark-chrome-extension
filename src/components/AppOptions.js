@@ -6,8 +6,8 @@ import { useChromeStorageLocal } from 'use-chrome-storage';
 
 export const AppOptions = () => {
   const importFileRef = useRef(null);
-  const [rules, setRules] = useChromeStorageLocal('rules');
-  const [datasets, setDatasets] = useChromeStorageLocal('datasets');
+  const [rules, setRules] = useChromeStorageLocal('rules', []);
+  const [datasets, setDatasets] = useChromeStorageLocal('datasets', []);
 
   const handleImportFileUpload = useCallback(() => {
     importFileRef.current?.click();
